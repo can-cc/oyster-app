@@ -1,4 +1,22 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'dart:developer';
+import 'package:http/http.dart' as http;
+import './atom.dart';
+
+Future<Atoms> fetchAtoms() async {
+  final response =
+  await http.get('http://192.168.50.77:7788/api/atoms/10?offset=0');
+
+  if (response.statusCode == 200) {
+    // If server returns an OK response, parse the JSON
+    var atoms = json.decode(response.body);
+    return Atoms.fromJson(atoms);
+  } else {
+    // If that response was not OK, throw an error.
+    throw Exception('Failed to load post');
+  }
+}
 
 void main() => runApp(new MyApp());
 
@@ -44,6 +62,16 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  Future<Atoms> atoms;
+
+  @override
+  void initState() {
+    super.initState();
+    debugPrint('hihihihi->');
+    atoms = fetchAtoms();
+  }
+
+
 
   void _incrementCounter() {
     setState(() {
@@ -58,6 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('hi000');
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
