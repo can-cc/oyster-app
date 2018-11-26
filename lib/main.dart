@@ -6,7 +6,7 @@ import './atom.dart';
 
 Future<Atoms> fetchAtoms() async {
   final response =
-  await http.get('http://192.168.50.77:7788/api/atoms/10?offset=0');
+  await http.get('http://192.168.50.77:7788/api/atoms/30?offset=0');
 
   if (response.statusCode == 200) {
     // If server returns an OK response, parse the JSON
