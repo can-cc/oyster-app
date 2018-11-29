@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'dart:developer';
-import 'package:http/http.dart' as http;
-import './atom.dart';
+import './screens/login-screen.dart';
+import './screens/atoms-screen.dart';
 
 
 
@@ -10,14 +8,23 @@ void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
+  final routes = <String, WidgetBuilder>{
+    AtomsPage.tag: (context) => AtomsPage(),
+    LoginPage.tag: (context) => LoginPage(),
+  };
+
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Flutter Demo',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
+    return MaterialApp(
+      title: 'Kodeversitas',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.lightBlue,
+        fontFamily: 'Nunito',
       ),
-      home: new MyHomePage(title: 'Flutter Demo Home Page'),
+      home: LoginPage(),
+      routes: routes,
     );
   }
 }
