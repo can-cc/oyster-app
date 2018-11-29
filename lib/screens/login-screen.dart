@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:login/login-screen.dart';
+import './atoms-screen.dart';
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page';
@@ -52,7 +52,7 @@ class LoginPageState extends State<LoginPage> {
           minWidth: 200.0,
           height: 42.0,
           onPressed: () {
-            Navigator.of(context).pushNamed(HomePage.tag);
+            Navigator.of(context).pushNamed(AtomsPage.tag);
           },
           color: Colors.lightBlueAccent,
           child: Text('Log In', style: TextStyle(color: Colors.white)),

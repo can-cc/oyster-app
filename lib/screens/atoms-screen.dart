@@ -25,17 +25,17 @@ Future<List<int>> fakeRequest(int from, int to) async {
   });
 }
 
-class MyHomePage extends StatefulWidget {
-  static String tag = 'atom-page';
-  MyHomePage({Key key, this.title}) : super(key: key);
+class AtomsPage extends StatefulWidget {
+  static String tag = 'atoms-page';
+  AtomsPage({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  AtomsState createState() => new AtomsState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class AtomsState extends State<AtomsPage> {
   List<Atom> items = List();
   ScrollController _scrollController = new ScrollController();
   bool isPerformingRequest = false;
