@@ -9,6 +9,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
+
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final logo = Hero(
@@ -21,9 +25,9 @@ class LoginPageState extends State<LoginPage> {
     );
 
     final username = TextFormField(
+      controller: _usernameController,
       keyboardType: TextInputType.text,
       autofocus: true,
-      initialValue: '',
       decoration: InputDecoration(
         hintText: 'Username',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -32,8 +36,9 @@ class LoginPageState extends State<LoginPage> {
     );
 
     final password = TextFormField(
+      controller: _passwordController,
+      keyboardType: TextInputType.text,
       autofocus: false,
-      initialValue: '',
       obscureText: true,
       decoration: InputDecoration(
         hintText: 'Password',
@@ -45,15 +50,13 @@ class LoginPageState extends State<LoginPage> {
     final loginButton = Padding(
       padding: EdgeInsets.symmetric(vertical: 16.0),
       child: Material(
-        borderRadius: BorderRadius.circular(30.0),
-        elevation: 5.0,
         child: MaterialButton(
           minWidth: 200.0,
           height: 42.0,
           onPressed: () {
-            debugPrint(username.controller.text);
-            debugPrint(password.controller.text);
-            Navigator.of(context).pushNamed(AtomsPage.tag);
+            debugPrint(_usernameController.text);
+            debugPrint(_passwordController.text);
+            Navigator.of(context).pushReplacementNamed(AtomsPage.tag);
           },
           color: Colors.lightBlueAccent,
           child: Text('Log In', style: TextStyle(color: Colors.white)),
