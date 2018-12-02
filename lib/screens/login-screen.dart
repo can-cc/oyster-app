@@ -20,12 +20,12 @@ class LoginPageState extends State<LoginPage> {
       ),
     );
 
-    final email = TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      autofocus: false,
-      initialValue: 'alucard@gmail.com',
+    final username = TextFormField(
+      keyboardType: TextInputType.text,
+      autofocus: true,
+      initialValue: '',
       decoration: InputDecoration(
-        hintText: 'Email',
+        hintText: 'Username',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
@@ -33,7 +33,7 @@ class LoginPageState extends State<LoginPage> {
 
     final password = TextFormField(
       autofocus: false,
-      initialValue: 'some password',
+      initialValue: '',
       obscureText: true,
       decoration: InputDecoration(
         hintText: 'Password',
@@ -46,12 +46,13 @@ class LoginPageState extends State<LoginPage> {
       padding: EdgeInsets.symmetric(vertical: 16.0),
       child: Material(
         borderRadius: BorderRadius.circular(30.0),
-        shadowColor: Colors.lightBlueAccent.shade100,
         elevation: 5.0,
         child: MaterialButton(
           minWidth: 200.0,
           height: 42.0,
           onPressed: () {
+            debugPrint(username.controller.text);
+            debugPrint(password.controller.text);
             Navigator.of(context).pushNamed(AtomsPage.tag);
           },
           color: Colors.lightBlueAccent,
@@ -77,7 +78,7 @@ class LoginPageState extends State<LoginPage> {
           children: <Widget>[
             logo,
             SizedBox(height: 48.0),
-            email,
+            username,
             SizedBox(height: 8.0),
             password,
             SizedBox(height: 24.0),
