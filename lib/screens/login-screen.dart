@@ -76,11 +76,10 @@ class LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.white,
       body: Center(
         child: ListView(
-          shrinkWrap: true,
           padding: EdgeInsets.only(left: 24.0, right: 24.0),
           children: <Widget>[
             logo,
-            SizedBox(height: 0.0),
+            SizedBox(height: 8.0),
             username,
             SizedBox(height: 8.0),
             password,
