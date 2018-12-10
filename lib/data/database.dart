@@ -5,15 +5,15 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:osyter_app/model/User.dart';
 
-class BookDatabase {
-  static final BookDatabase _bookDatabase = new BookDatabase._internal();
+class AppDatabase {
+  static final AppDatabase _bookDatabase = new AppDatabase._internal();
 
   Database db;
   bool didInit = false;
 
-  BookDatabase._internal();
+  AppDatabase._internal();
 
-  static BookDatabase get() {
+  static AppDatabase get() {
     return _bookDatabase;
   }
 
@@ -45,8 +45,8 @@ class BookDatabase {
   }
 
   Future<int> saveUser(User user) async {
-    var dbClient = await db;
-    int res = await dbClient.insert("User", user.toMap());
+    var db = await _getDb();
+    int res = await db.insert("User", user.toMap());
     return res;
   }
 

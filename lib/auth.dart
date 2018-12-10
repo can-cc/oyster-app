@@ -19,7 +19,7 @@ class AuthStateProvider {
   }
 
   void initState() async {
-    var db = new BookDatabase();
+    var db = AppDatabase.get();
     var isLoggedIn = await db.isLoggedIn();
     if(isLoggedIn)
       notify(AuthState.LOGGED_IN);

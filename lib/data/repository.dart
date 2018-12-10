@@ -4,14 +4,14 @@ class Repository {
 
   static final Repository _repo = new Repository._internal();
 
-  BookDatabase database;
+  AppDatabase database;
 
   static Repository get() {
     return _repo;
   }
 
   Repository._internal() {
-    database = BookDatabase.get();
+    database = AppDatabase.get();
   }
 
 

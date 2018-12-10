@@ -13,6 +13,20 @@ class LoginPageState extends State<LoginPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  final formKey = new GlobalKey<FormState>();
+  final scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  bool _isLoading = false;
+
+  String _username, _password;
+
+
+  void _submit() {
+    debugPrint(_usernameController.text);
+    debugPrint(_passwordController.text);
+    Navigator.of(context).pushReplacementNamed(AtomsPage.tag);
+  }
+
   @override
   Widget build(BuildContext context) {
     final logo = Hero(
@@ -47,21 +61,47 @@ class LoginPageState extends State<LoginPage> {
       ),
     );
 
-    final loginButton = Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: Material(
-        child: MaterialButton(
-          minWidth: 200.0,
-          height: 42.0,
-          onPressed: () {
-            debugPrint(_usernameController.text);
-            debugPrint(_passwordController.text);
-            Navigator.of(context).pushReplacementNamed(AtomsPage.tag);
-          },
-          color: Colors.lightBlueAccent,
-          child: Text('Log In', style: TextStyle(color: Colors.white)),
+    final loginBtn = new RaisedButton(
+      onPressed: _submit,
+      child: new Text("LOGIN"),
+      color: Colors.lightBlueAccent,
+    );
+
+    var loginForm = new Column(
+      children: <Widget>[
+        new Text(
+          "Login App",
+          textScaleFactor: 1.5,
         ),
-      ),
+        new Form(
+          key: formKey,
+          child: new Column(
+            children: <Widget>[
+              new Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: new TextFormField(
+                  onSaved: (val) => _username = val,
+                  validator: (val) {
+                    return val.length < 10
+                        ? "Username must have atleast 10 chars"
+                        : null;
+                  },
+                  decoration: new InputDecoration(labelText: "Username"),
+                ),
+              ),
+              new Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: new TextFormField(
+                  onSaved: (val) => _password = val,
+                  decoration: new InputDecoration(labelText: "Password"),
+                ),
+              ),
+            ],
+          ),
+        ),
+        _isLoading ? new CircularProgressIndicator() : loginBtn
+      ],
+      crossAxisAlignment: CrossAxisAlignment.center,
     );
 
     final forgotLabel = FlatButton(
@@ -79,12 +119,13 @@ class LoginPageState extends State<LoginPage> {
           padding: EdgeInsets.only(left: 24.0, right: 24.0),
           children: <Widget>[
             logo,
-            SizedBox(height: 8.0),
-            username,
-            SizedBox(height: 8.0),
-            password,
-            SizedBox(height: 24.0),
-            loginButton,
+//            SizedBox(height: 8.0),
+//            username,
+//            SizedBox(height: 8.0),
+//            password,
+            loginForm,
+            // SizedBox(height: 24.0),
+            // loginBtn,
             forgotLabel
           ],
         ),
