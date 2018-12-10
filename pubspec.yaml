@@ -13,7 +13,9 @@ environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
 
 dependencies:
-  graphql_flutter: ^0.9.5
+  graphql_flutter: any
+  sqflite: any
+  path_provider: "^0.4.1"
   flutter:
     sdk: flutter
 

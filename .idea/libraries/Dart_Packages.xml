@@ -135,6 +135,13 @@
             </list>
           </value>
         </entry>
+        <entry key="sqflite">
+          <value>
+            <list>
+              <option value="$USER_HOME$/software/flutter/.pub-cache/hosted/pub.dartlang.org/sqflite-0.13.0/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="stack_trace">
           <value>
             <list>
@@ -153,6 +160,13 @@
           <value>
             <list>
               <option value="$USER_HOME$/software/flutter/.pub-cache/hosted/pub.dartlang.org/string_scanner-1.0.4/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="synchronized">
+          <value>
+            <list>
+              <option value="$USER_HOME$/software/flutter/.pub-cache/hosted/pub.dartlang.org/synchronized-1.5.3/lib" />
             </list>
           </value>
         </entry>
@@ -210,9 +224,11 @@
       <root url="file://$USER_HOME$/software/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-0.4.1/lib" />
       <root url="file://$USER_HOME$/software/flutter/.pub-cache/hosted/pub.dartlang.org/quiver-2.0.1/lib" />
       <root url="file://$USER_HOME$/software/flutter/.pub-cache/hosted/pub.dartlang.org/source_span-1.4.1/lib" />
+      <root url="file://$USER_HOME$/software/flutter/.pub-cache/hosted/pub.dartlang.org/sqflite-0.13.0/lib" />
       <root url="file://$USER_HOME$/software/flutter/.pub-cache/hosted/pub.dartlang.org/stack_trace-1.9.3/lib" />
       <root url="file://$USER_HOME$/software/flutter/.pub-cache/hosted/pub.dartlang.org/stream_channel-1.6.8/lib" />
       <root url="file://$USER_HOME$/software/flutter/.pub-cache/hosted/pub.dartlang.org/string_scanner-1.0.4/lib" />
+      <root url="file://$USER_HOME$/software/flutter/.pub-cache/hosted/pub.dartlang.org/synchronized-1.5.3/lib" />
       <root url="file://$USER_HOME$/software/flutter/.pub-cache/hosted/pub.dartlang.org/term_glyph-1.0.1/lib" />
       <root url="file://$USER_HOME$/software/flutter/.pub-cache/hosted/pub.dartlang.org/test_api-0.2.1/lib" />
       <root url="file://$USER_HOME$/software/flutter/.pub-cache/hosted/pub.dartlang.org/typed_data-1.1.6/lib" />
