@@ -10,8 +10,6 @@ class LoginPage extends StatefulWidget {
 
 class LoginPageState extends State<LoginPage> {
 
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
 
   final formKey = new GlobalKey<FormState>();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -22,9 +20,14 @@ class LoginPageState extends State<LoginPage> {
 
 
   void _submit() {
-    debugPrint(_usernameController.text);
-    debugPrint(_passwordController.text);
-    Navigator.of(context).pushReplacementNamed(AtomsPage.tag);
+    final form = formKey.currentState;
+
+    if (form.validate()) {
+      setState(() => _isLoading = true);
+      form.save();
+      // _presenter.doLogin(_username, _password);
+    }
+    // Navigator.of(context).pushReplacementNamed(AtomsPage.tag);
   }
 
   @override
@@ -38,28 +41,6 @@ class LoginPageState extends State<LoginPage> {
       ),
     );
 
-    final username = TextFormField(
-      controller: _usernameController,
-      keyboardType: TextInputType.text,
-      autofocus: true,
-      decoration: InputDecoration(
-        hintText: 'Username',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
-    );
-
-    final password = TextFormField(
-      controller: _passwordController,
-      keyboardType: TextInputType.text,
-      autofocus: false,
-      obscureText: true,
-      decoration: InputDecoration(
-        hintText: 'Password',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
-    );
 
     final loginBtn = new RaisedButton(
       onPressed: _submit,
@@ -92,6 +73,7 @@ class LoginPageState extends State<LoginPage> {
               new Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: new TextFormField(
+                  obscureText: true,
                   onSaved: (val) => _password = val,
                   decoration: new InputDecoration(labelText: "Password"),
                 ),
