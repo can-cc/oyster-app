@@ -1,16 +1,19 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
-import './atoms-screen.dart';
+import 'package:osyter_app/screens/login/login-screen-presenter.dart';
+import 'package:osyter_app/auth.dart';
+import 'package:osyter_app/screens/atoms-screen.dart';
+import 'package:osyter_app/model/User.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatefulWidget  {
   static String tag = 'login-page';
 
   @override
   LoginPageState createState() => new LoginPageState();
 }
 
-class LoginPageState extends State<LoginPage> {
-
-
+class LoginPageState extends State<LoginPage> implements LoginScreenContract, AuthStateListener {
+  BuildContext _ctx;
   final formKey = new GlobalKey<FormState>();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -18,20 +21,39 @@ class LoginPageState extends State<LoginPage> {
 
   String _username, _password;
 
+  LoginScreenPresenter _presenter;
+
+  LoginPageState() {
+    _presenter = new LoginScreenPresenter(this);
+    var authStateProvider = new AuthStateProvider();
+    authStateProvider.subscribe(this);
+  }
+
+
+  @override
+  onAuthStateChanged(AuthState state) {
+    if(state == AuthState.LOGGED_IN) {
+      Navigator.of(context).pushReplacementNamed(AtomsPage.tag);
+    }
+  }
 
   void _submit() {
     final form = formKey.currentState;
-
     if (form.validate()) {
       setState(() => _isLoading = true);
       form.save();
-      // _presenter.doLogin(_username, _password);
+      _presenter.doLogin(_username, _password);
     }
-    // Navigator.of(context).pushReplacementNamed(AtomsPage.tag);
+  }
+
+  void _showSnackBar(String text) {
+    scaffoldKey.currentState
+        .showSnackBar(new SnackBar(content: new Text(text)));
   }
 
   @override
   Widget build(BuildContext context) {
+    _ctx = context;
     final logo = Hero(
       tag: 'hero',
       child: CircleAvatar(
@@ -40,7 +62,6 @@ class LoginPageState extends State<LoginPage> {
         child: Image.asset('assets/logo.png'),
       ),
     );
-
 
     final loginBtn = new RaisedButton(
       onPressed: _submit,
@@ -63,8 +84,8 @@ class LoginPageState extends State<LoginPage> {
                 child: new TextFormField(
                   onSaved: (val) => _username = val,
                   validator: (val) {
-                    return val.length < 10
-                        ? "Username must have atleast 10 chars"
+                    return val.length < 3
+                        ? "Username must have atleast 3 chars"
                         : null;
                   },
                   decoration: new InputDecoration(labelText: "Username"),
@@ -95,6 +116,7 @@ class LoginPageState extends State<LoginPage> {
     );
 
     return Scaffold(
+      key: scaffoldKey,
       backgroundColor: Colors.white,
       body: Center(
         child: ListView(
@@ -113,5 +135,17 @@ class LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void onLoginError(String errorTxt) {
+    _showSnackBar(errorTxt);
+    setState(() => _isLoading = false);
+  }
+
+  @override
+  void onLoginSuccess(User user) async {
+    _showSnackBar(user.toString());
+    setState(() => _isLoading = false);
   }
 }
