@@ -25,7 +25,7 @@ class NetworkUtil {
   Future<dynamic> post(String url, {Map body}) {
     print(body.toString());
     return http
-        .post(url, body: body, headers: {"content-type": "application/json; charset=utf-8"})
+        .post(url, body: json.encode(body), headers: {"content-type": "application/json; charset=utf-8"})
         .then((http.Response response) {
       final String res = response.body;
       final int statusCode = response.statusCode;
