@@ -1,10 +1,9 @@
 class User {
   String _id;
   String _username;
-  User(this._username);
 
   User.map(dynamic obj) {
-    this._id = obj["id"];
+    this._id = obj["id"].toString();
     this._username = obj["username"];
   }
 
