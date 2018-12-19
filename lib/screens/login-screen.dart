@@ -33,7 +33,7 @@ class LoginPageState extends State<LoginPage>
   @override
   onAuthStateChanged(AuthState state) {
     if (state == AuthState.LOGGED_IN) {
-      Navigator.of(context).pushReplacementNamed(AtomsPage.tag);
+      // Navigator.of(context).pushReplacementNamed(AtomsPage.tag);
     }
   }
 
