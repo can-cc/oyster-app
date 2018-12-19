@@ -5,14 +5,15 @@ import 'package:osyter_app/auth.dart';
 import 'package:osyter_app/screens/atoms-screen.dart';
 import 'package:osyter_app/model/User.dart';
 
-class LoginPage extends StatefulWidget  {
+class LoginPage extends StatefulWidget {
   static String tag = 'login-page';
 
   @override
   LoginPageState createState() => new LoginPageState();
 }
 
-class LoginPageState extends State<LoginPage> implements LoginScreenContract, AuthStateListener {
+class LoginPageState extends State<LoginPage>
+    implements LoginScreenContract, AuthStateListener {
   BuildContext _ctx;
   final formKey = new GlobalKey<FormState>();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -29,10 +30,9 @@ class LoginPageState extends State<LoginPage> implements LoginScreenContract, Au
     authStateProvider.subscribe(this);
   }
 
-
   @override
   onAuthStateChanged(AuthState state) {
-    if(state == AuthState.LOGGED_IN) {
+    if (state == AuthState.LOGGED_IN) {
       Navigator.of(context).pushReplacementNamed(AtomsPage.tag);
     }
   }

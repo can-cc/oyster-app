@@ -1,6 +1,6 @@
 import 'package:osyter_app/data/database.dart';
 
-enum AuthState{ LOGGED_IN, LOGGED_OUT }
+enum AuthState { LOGGED_IN, LOGGED_OUT }
 
 abstract class AuthStateListener {
   void onAuthStateChanged(AuthState state);
@@ -21,7 +21,7 @@ class AuthStateProvider {
   void initState() async {
     var db = AppDatabase.get();
     var isLoggedIn = await db.isLoggedIn();
-    if(isLoggedIn)
+    if (isLoggedIn)
       notify(AuthState.LOGGED_IN);
     else
       notify(AuthState.LOGGED_OUT);
@@ -32,9 +32,8 @@ class AuthStateProvider {
   }
 
   void dispose(AuthStateListener listener) {
-    for(var l in _subscribers) {
-      if(l == listener)
-        _subscribers.remove(l);
+    for (var l in _subscribers) {
+      if (l == listener) _subscribers.remove(l);
     }
   }
 

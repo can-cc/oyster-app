@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../atom.dart';
+import '../../atom.dart';
 
 Future<Atoms> fetchAtoms() async {
   final response =

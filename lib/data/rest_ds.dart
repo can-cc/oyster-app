@@ -8,10 +8,8 @@ class RestDatasource {
 
   Future<User> login(String username, String password) {
     print("${username}, ${password}");
-    return _netUtil.post(LOGIN_URL, body: {
-      "username": username,
-      "password": password
-    }).then((dynamic res) {
+    return _netUtil.post(LOGIN_URL,
+        body: {"username": username, "password": password}).then((dynamic res) {
       print(res.toString());
       return new User.map(res);
     });

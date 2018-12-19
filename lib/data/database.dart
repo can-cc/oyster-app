@@ -17,11 +17,10 @@ class AppDatabase {
     return _bookDatabase;
   }
 
-  Future<Database> _getDb() async{
-    if(!didInit) await _init();
+  Future<Database> _getDb() async {
+    if (!didInit) await _init();
     return db;
   }
-
 
   Future _init() async {
     // Get a location using path_provider
@@ -29,11 +28,11 @@ class AppDatabase {
     String path = join(documentsDirectory.path, "app.db");
     db = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
-          // When creating the db, create the table
-          print("db version: ${version}.");
-          await db.execute(
-              "CREATE TABLE User(id INTEGER PRIMARY KEY, username TEXT)");
-        });
+      // When creating the db, create the table
+      print("db version: ${version}.");
+      await db
+          .execute("CREATE TABLE User(id INTEGER PRIMARY KEY, username TEXT)");
+    });
     print("Created tables");
     didInit = true;
   }
@@ -41,7 +40,7 @@ class AppDatabase {
   Future<bool> isLoggedIn() async {
     var db = await _getDb();
     var res = await db.query("User");
-    return res.length > 0? true: false;
+    return res.length > 0 ? true : false;
   }
 
   Future<int> saveUser(User user) async {
@@ -49,5 +48,4 @@ class AppDatabase {
     int res = await db.insert("User", user.toMap());
     return res;
   }
-
 }

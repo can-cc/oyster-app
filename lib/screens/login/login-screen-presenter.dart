@@ -20,7 +20,7 @@ class LoginScreenPresenter {
       await db.saveUser(user);
       var authStateProvider = new AuthStateProvider();
       authStateProvider.notify(AuthState.LOGGED_IN);
-    } on Exception catch(error) {
+    } on Exception catch (error) {
       _view.onLoginError(error.toString());
     }
   }

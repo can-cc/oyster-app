@@ -2,7 +2,6 @@ import 'package:osyter_app/data/database.dart';
 import 'package:osyter_app/model/Feed.dart';
 
 class Repository {
-
   static final Repository _repo = new Repository._internal();
 
   AppDatabase database;
@@ -15,7 +14,5 @@ class Repository {
     database = AppDatabase.get();
   }
 
-  Future<List<Feed>> getFeeds() {
-
-  }
+  Future<List<Feed>> getFeeds() {}
 }

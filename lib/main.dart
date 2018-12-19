@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import './screens/login-screen.dart';
 import './screens/atoms-screen.dart';
 
-
 void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {

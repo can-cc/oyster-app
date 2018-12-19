@@ -1,4 +1,3 @@
-
 class Atom {
   final int id;
   final String title;
@@ -13,7 +12,6 @@ class Atom {
       content: json['content'],
     );
   }
-
 }
 
 class Atoms {

@@ -21,7 +21,7 @@ class Feed {
     map["title"] = _title;
     map["originHref"] = _originHref;
     map["content"] = _content;
-    map["_createdAt"] = _createdAt;
+    map["createdAt"] = _createdAt;
     return map;
   }
 }
