@@ -32,6 +32,8 @@ class AppDatabase {
       print("db version: ${version}.");
       await db
           .execute("CREATE TABLE User(id INTEGER PRIMARY KEY, username TEXT)");
+      
+      await db.execute("CREATE TABLE Token(id INTEGER PRIMARY KEY, token TEXT)");
     });
     print("Created tables");
     didInit = true;
@@ -47,5 +49,27 @@ class AppDatabase {
     var db = await _getDb();
     int res = await db.insert("User", user.toMap());
     return res;
+  }
+
+  Future<void> clearUser() async {
+    var db = await _getDb();
+    await db.execute("DELETE FROM User");
+  }
+
+  Future<int> saveAuthToken(String token) async {
+    var db = await _getDb();
+    var res = await db.insert("token", {"token": token});
+    return res;
+  }
+
+  Future<void> clearAuthToken() async {
+    var db = await _getDb();
+    await db.execute("DELETE FROM Token");
+  }
+
+  Future<String> getAuthToken() async {
+    var db = await _getDb();
+    var res = await db.query("User");
+    return res.first["token"];
   }
 }

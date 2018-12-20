@@ -2,6 +2,16 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+class ApiResult {
+  dynamic body;
+  Map<String, String> header;
+
+  ApiResult(dynamic body, dynamic header) {
+    this.body = body;
+    this.header;
+  }
+}
+
 class NetworkUtil {
   // next three lines makes this class a Singleton
   static NetworkUtil _instance = new NetworkUtil.internal();
@@ -35,22 +45,17 @@ class NetworkUtil {
     });
   }
 
-  Future<dynamic> post(String url, {Map body}) {
-    print(body.toString());
+  Future<ApiResult> post(String url, {Map body}) {
     return http.post(url, body: json.encode(body), headers: {
       "content-type": "application/json; charset=utf-8"
     }).then((http.Response response) {
       final String res = response.body;
       final int statusCode = response.statusCode;
 
-
       if (statusCode < 200 || statusCode > 400 || json == null) {
         throw new Exception("Error while fetching data");
       }
-      return {
-        "body": _decoder.convert(res),
-        "header": response.headers
-      };
+      return new ApiResult(_decoder.convert(res), response.headers);
     });
   }
 }

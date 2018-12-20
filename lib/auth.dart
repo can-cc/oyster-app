@@ -9,6 +9,7 @@ abstract class AuthStateListener {
 // A naive implementation of Observer/Subscriber Pattern. Will do for now.
 class AuthStateProvider {
   static final AuthStateProvider _instance = new AuthStateProvider.internal();
+  String authToken;
 
   List<AuthStateListener> _subscribers;
 
@@ -21,10 +22,12 @@ class AuthStateProvider {
   void initState() async {
     var db = AppDatabase.get();
     var isLoggedIn = await db.isLoggedIn();
-    if (isLoggedIn)
+    if (isLoggedIn) {
       notify(AuthState.LOGGED_IN);
-    else
+      authToken = await db.getAuthToken();
+    } else {
       notify(AuthState.LOGGED_OUT);
+    }
   }
 
   void subscribe(AuthStateListener listener) {
@@ -39,5 +42,15 @@ class AuthStateProvider {
 
   void notify(AuthState state) {
     _subscribers.forEach((AuthStateListener s) => s.onAuthStateChanged(state));
+  }
+
+  void setAuthToken(String token) async {
+    var db = AppDatabase.get();
+    authToken = token;
+    await db.saveAuthToken(token);
+  }
+
+  String getAuthToken() {
+    return authToken;
   }
 }

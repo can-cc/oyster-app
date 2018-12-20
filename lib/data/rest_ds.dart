@@ -1,5 +1,4 @@
 import 'package:osyter_app/utils/network_util.dart';
-import 'package:osyter_app/model/User.dart';
 import 'package:osyter_app/model/Feed.dart';
 import 'package:osyter_app/auth.dart';
 
@@ -10,14 +9,9 @@ class RestDataSource implements AuthStateListener {
   static final LOGIN_URL = BASE_URL + "/api/login";
   final _authStateProvider = new AuthStateProvider();
 
-  RestDataSource() {}
-
-  Future<User> login(String username, String password) {
+  Future<ApiResult> login(String username, String password) {
     return _netUtil.post(LOGIN_URL,
-        body: {"username": username, "password": password}).then((dynamic result) {
-         print(result);
-      return new User.map(result["body"]);
-    });
+        body: {"username": username, "password": password});
   }
 
   Future<List<Feed>> getFeeds() {
