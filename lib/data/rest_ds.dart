@@ -2,6 +2,9 @@ import 'package:osyter_app/utils/network_util.dart';
 import 'package:osyter_app/model/Feed.dart';
 import 'package:osyter_app/auth.dart';
 
+
+final SERVER_HOST = "http://192.168.50.77:7788"
+
 class RestDataSource implements AuthStateListener {
   NetworkUtil _netUtil = new NetworkUtil();
 
@@ -14,8 +17,8 @@ class RestDataSource implements AuthStateListener {
         body: {"username": username, "password": password});
   }
 
-  Future<List<Feed>> getFeeds() {
-//    return _netUtil.getByAuth("http://192.168.50.77:7788/api/atoms/30?offset=0", _authStateProvider)
+  Future<List<Feed>> getFeeds(int limit, int offset) {
+    return _netUtil.getByAuth("${SERVER_HOST}/api/atoms/${limit}?offset=${offset}", _authStateProvider.getAuthToken());
   }
 
   @override
