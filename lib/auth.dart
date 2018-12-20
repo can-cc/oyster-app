@@ -53,4 +53,11 @@ class AuthStateProvider {
   String getAuthToken() {
     return authToken;
   }
+
+  void logout() async {
+    notify(AuthState.LOGGED_OUT);
+    var db = AppDatabase.get();
+    await db.clearAuthToken();
+    await db.clearUser();
+  }
 }

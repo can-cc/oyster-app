@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:osyter_app/auth.dart';
 
 class ApiResult {
   dynamic body;
@@ -19,6 +20,7 @@ class NetworkUtil {
   factory NetworkUtil() => _instance;
 
   final JsonDecoder _decoder = new JsonDecoder();
+  final _authStateProvider = new AuthStateProvider();
 
   Future<dynamic> get(String url) {
     return http.get(url).then((http.Response response) {
@@ -32,11 +34,16 @@ class NetworkUtil {
     });
   }
 
-    Future<dynamic> getByAuth(String url, String jwtToken) {
-    return http
-        .get(url, headers: {"jwt-token": jwtToken}).then((http.Response response) {
+  Future<dynamic> getByAuth(String url) {
+    final token = _authStateProvider.getAuthToken();
+    return http.get(url, headers: {"Authorization": token}).then(
+        (http.Response response) {
       final String res = response.body;
       final int statusCode = response.statusCode;
+
+      if (statusCode == 401) {
+        _authStateProvider.logout();
+      }
 
       if (statusCode < 200 || statusCode > 400 || json == null) {
         throw new Exception("Error while fetching data");

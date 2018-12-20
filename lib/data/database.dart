@@ -32,8 +32,9 @@ class AppDatabase {
       print("db version: ${version}.");
       await db
           .execute("CREATE TABLE User(id INTEGER PRIMARY KEY, username TEXT)");
-      
-      await db.execute("CREATE TABLE Token(id INTEGER PRIMARY KEY, token TEXT)");
+
+      await db
+          .execute("CREATE TABLE Token(id INTEGER PRIMARY KEY, token TEXT)");
     });
     print("Created tables");
     didInit = true;
