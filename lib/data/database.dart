@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path_provider/path_provider.dart';
+
 import 'package:osyter_app/model/User.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
 
 class AppDatabase {
   static final AppDatabase _bookDatabase = new AppDatabase._internal();
@@ -26,7 +27,7 @@ class AppDatabase {
     // Get a location using path_provider
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "app.db");
-    db = await openDatabase(path, version: 1,
+    db = await openDatabase(path, version: 2,
         onCreate: (Database db, int version) async {
       // When creating the db, create the table
       print("db version: ${version}.");
@@ -35,9 +36,15 @@ class AppDatabase {
 
       await db
           .execute("CREATE TABLE Token(id INTEGER PRIMARY KEY, token TEXT)");
+      print("Created tables");
     });
-    print("Created tables");
     didInit = true;
+  }
+
+  Future clear() async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = join(documentsDirectory.path, "app.db");
+    await deleteDatabase(path);
   }
 
   Future<bool> isLoggedIn() async {

@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:osyter_app/auth.dart';
+import 'package:osyter_app/data/database.dart';
 import 'package:osyter_app/model/User.dart';
-import 'package:osyter_app/screens/feeds/feeds_screen.dart';
 import 'package:osyter_app/screens/login/login-screen-presenter.dart';
 
 class LoginPage extends StatefulWidget {
@@ -34,7 +34,7 @@ class LoginPageState extends State<LoginPage>
   @override
   onAuthStateChanged(AuthState state) {
     if (state == AuthState.LOGGED_IN) {
-      Navigator.of(context).pushReplacementNamed(FeedsPage.tag);
+      // Navigator.of(context).pushReplacementNamed(FeedsPage.tag);
     }
   }
 
@@ -67,6 +67,15 @@ class LoginPageState extends State<LoginPage>
       onPressed: _submit,
       child: new Text("LOGIN"),
       color: Colors.lightBlueAccent,
+    );
+
+    final clearDbBtn = new RaisedButton(
+      onPressed: () {
+        final db = AppDatabase.get();
+        db.clear();
+      },
+      child: new Text("Clear DB"),
+      color: Colors.deepOrange,
     );
 
     var loginForm = new Column(
@@ -102,7 +111,8 @@ class LoginPageState extends State<LoginPage>
             ],
           ),
         ),
-        _isLoading ? new CircularProgressIndicator() : loginBtn
+        _isLoading ? new CircularProgressIndicator() : loginBtn,
+        clearDbBtn
       ],
       crossAxisAlignment: CrossAxisAlignment.center,
     );
