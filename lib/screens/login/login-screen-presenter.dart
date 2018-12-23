@@ -1,7 +1,7 @@
-import 'package:osyter_app/model/User.dart';
-import 'package:osyter_app/data/rest_ds.dart';
-import 'package:osyter_app/data/database.dart';
 import 'package:osyter_app/auth.dart';
+import 'package:osyter_app/data/database.dart';
+import 'package:osyter_app/data/rest_ds.dart';
+import 'package:osyter_app/model/User.dart';
 import 'package:osyter_app/utils/network_util.dart';
 
 abstract class LoginScreenContract {
@@ -11,7 +11,7 @@ abstract class LoginScreenContract {
 
 class LoginScreenPresenter {
   LoginScreenContract _view;
-  RestDatasource api = new RestDatasource();
+  RestDataSource api = new RestDataSource();
   LoginScreenPresenter(this._view);
 
   doLogin(String username, String password) async {
