@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:osyter_app/screens/feeds/feeds_screen.dart';
+
 import './screens/login-screen.dart';
-import './screens/atoms-screen.dart';
 
 void main() => runApp(new MyApp());
 
@@ -8,7 +9,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
 
   final routes = <String, WidgetBuilder>{
-    AtomsPage.tag: (context) => AtomsPage(),
+    FeedsPage.tag: (context) => FeedsPage(),
     LoginPage.tag: (context) => LoginPage(),
   };
 

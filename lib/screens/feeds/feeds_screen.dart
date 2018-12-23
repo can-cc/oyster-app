@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
 import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
 import '../../atom.dart';
 
 Future<Atoms> fetchAtoms() async {
@@ -23,17 +25,17 @@ Future<List<int>> fakeRequest(int from, int to) async {
   });
 }
 
-class AtomsPage extends StatefulWidget {
+class FeedsPage extends StatefulWidget {
   static String tag = 'atoms-page';
-  AtomsPage({Key key, this.title}) : super(key: key);
+  FeedsPage({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  AtomsState createState() => new AtomsState();
+  FeedsState createState() => new FeedsState();
 }
 
-class AtomsState extends State<AtomsPage> {
+class FeedsState extends State<FeedsPage> {
   List<Atom> items = List();
   ScrollController _scrollController = new ScrollController();
   bool isPerformingRequest = false;

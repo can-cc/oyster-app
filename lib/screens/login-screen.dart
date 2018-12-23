@@ -1,9 +1,10 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:osyter_app/screens/login/login-screen-presenter.dart';
 import 'package:osyter_app/auth.dart';
-import 'package:osyter_app/screens/atoms-screen.dart';
 import 'package:osyter_app/model/User.dart';
+import 'package:osyter_app/screens/feeds/feeds_screen.dart';
+import 'package:osyter_app/screens/login/login-screen-presenter.dart';
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page';
@@ -14,7 +15,6 @@ class LoginPage extends StatefulWidget {
 
 class LoginPageState extends State<LoginPage>
     implements LoginScreenContract, AuthStateListener {
-
   BuildContext _ctx;
   final formKey = new GlobalKey<FormState>();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -34,7 +34,7 @@ class LoginPageState extends State<LoginPage>
   @override
   onAuthStateChanged(AuthState state) {
     if (state == AuthState.LOGGED_IN) {
-      // Navigator.of(context).pushReplacementNamed(AtomsPage.tag);
+      Navigator.of(context).pushReplacementNamed(FeedsPage.tag);
     }
   }
 
@@ -54,7 +54,6 @@ class LoginPageState extends State<LoginPage>
 
   @override
   Widget build(BuildContext context) {
-    _ctx = context;
     final logo = Hero(
       tag: 'hero',
       child: CircleAvatar(
@@ -122,17 +121,7 @@ class LoginPageState extends State<LoginPage>
       body: Center(
         child: ListView(
           padding: EdgeInsets.only(left: 24.0, right: 24.0),
-          children: <Widget>[
-            logo,
-//            SizedBox(height: 8.0),
-//            username,
-//            SizedBox(height: 8.0),
-//            password,
-            loginForm,
-            // SizedBox(height: 24.0),
-            // loginBtn,
-            forgotLabel
-          ],
+          children: <Widget>[logo, loginForm, forgotLabel],
         ),
       ),
     );
