@@ -53,7 +53,7 @@ class NetworkUtil {
     });
   }
 
-  Future<ApiResult> post(String url, {Map body}) {
+  Future<ApiResult> postWithHeader(String url, {Map body}) {
     return http.post(url, body: json.encode(body), headers: {
       "content-type": "application/json; charset=utf-8"
     }).then((http.Response response) {

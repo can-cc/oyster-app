@@ -10,13 +10,13 @@ class RestDataSource implements AuthStateListener {
   static final LOGIN_URL = SERVER_HOST + "/api/login";
 
   Future<ApiResult> login(String username, String password) {
-    return _netUtil
-        .post(LOGIN_URL, body: {"username": username, "password": password});
+    return _netUtil.postWithHeader(LOGIN_URL,
+        body: {"username": username, "password": password});
   }
 
   Future<List<Feed>> getFeeds(int limit, int offset) {
     return _netUtil
-        .getByAuth("${SERVER_HOST}/api/atoms/${limit}?offset=${offset}");
+        .getByAuth("${SERVER_HOST}/api/feeds/${limit}?offset=${offset}");
   }
 
   @override
