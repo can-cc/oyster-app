@@ -1,5 +1,5 @@
 import 'package:osyter_app/auth.dart';
-import 'package:osyter_app/model/Feed.dart';
+import 'package:osyter_app/model/Feeds.dart';
 import 'package:osyter_app/utils/network_util.dart';
 
 final SERVER_HOST = "http://192.168.50.77:7788";
@@ -14,9 +14,10 @@ class RestDataSource implements AuthStateListener {
         body: {"username": username, "password": password});
   }
 
-  Future<List<Feed>> getFeeds(int limit, int offset) {
+  Future<Feeds> getFeeds(int limit, int offset) {
     return _netUtil
-        .getByAuth("${SERVER_HOST}/api/feeds/${limit}?offset=${offset}");
+        .getByAuth("${SERVER_HOST}/api/feeds/${limit}?offset=${offset}")
+        .then((dynamic feeds) {return Feeds.fromJson(feeds);});
   }
 
   @override

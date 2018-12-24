@@ -46,6 +46,8 @@ class AuthStateProvider {
 
   void setAuthToken(String token) async {
     var db = AppDatabase.get();
+    print("token");
+    print(token);
     authToken = token;
     await db.saveAuthToken(token);
   }

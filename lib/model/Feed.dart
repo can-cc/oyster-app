@@ -14,6 +14,7 @@ class Feed {
   }
 
   String get title => _title;
+  String get content => _content;
 
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();

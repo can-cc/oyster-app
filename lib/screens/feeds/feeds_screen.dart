@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:osyter_app/model/Feed.dart';
+import 'package:osyter_app/model/Feeds.dart';
 import 'package:osyter_app/screens/feeds/feeds_screen_presenter.dart';
 
 //Future<Atoms> fetchAtoms() async {
@@ -45,7 +46,6 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
 
   @override
   void initState() {
-    debugPrint('debug init');
     super.initState();
     _getMoreData();
     _scrollController.addListener(() {
@@ -63,8 +63,8 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
   }
 
   @override
-  void onFeedReceived(List<Feed> newFeeds) {
-    if (newFeeds.isEmpty) {
+  void onFeedReceived(Feeds newFeeds) {
+    if (newFeeds.items.isEmpty) {
       double edge = 50.0;
       double offsetFromBottom = _scrollController.position.maxScrollExtent -
           _scrollController.position.pixels;
@@ -77,7 +77,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
     }
     offset += 30;
     setState(() {
-      items.addAll(newFeeds);
+      items.addAll(newFeeds.items);
       isPerformingRequest = false;
     });
   }
@@ -121,7 +121,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
           if (index == items.length) {
             return _buildProgressIndicator();
           } else {
-            return ListTile(title: new Text(items[index].title));
+            return ListTile(title: new Text(items[index].content));
           }
         },
         controller: _scrollController,

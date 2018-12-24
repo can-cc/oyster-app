@@ -23,7 +23,7 @@ class LoginScreenPresenter {
 
       var authStateProvider = new AuthStateProvider();
       authStateProvider.notify(AuthState.LOGGED_IN);
-      authStateProvider.setAuthToken(result.header["Authorization"]);
+      authStateProvider.setAuthToken(result.header["authorization"]);
     } on Exception catch (error) {
       _view.onLoginError(error.toString());
     }

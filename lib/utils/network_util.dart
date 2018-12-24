@@ -37,6 +37,7 @@ class NetworkUtil {
 
   Future<dynamic> getByAuth(String url) {
     final token = _authStateProvider.getAuthToken();
+    print(token);
     return http.get(url, headers: {"Authorization": token}).then(
         (http.Response response) {
       final String res = response.body;
