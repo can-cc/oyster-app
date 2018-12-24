@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:osyter_app/auth.dart';
 
@@ -9,7 +10,7 @@ class ApiResult {
 
   ApiResult(dynamic body, dynamic header) {
     this.body = body;
-    this.header;
+    this.header = header;
   }
 }
 

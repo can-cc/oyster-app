@@ -5,6 +5,7 @@ import 'package:osyter_app/auth.dart';
 import 'package:osyter_app/data/database.dart';
 import 'package:osyter_app/model/User.dart';
 import 'package:osyter_app/screens/login/login-screen-presenter.dart';
+import 'package:osyter_app/screens/feeds/feeds_screen.dart';
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page';
@@ -34,7 +35,7 @@ class LoginPageState extends State<LoginPage>
   @override
   onAuthStateChanged(AuthState state) {
     if (state == AuthState.LOGGED_IN) {
-      // Navigator.of(context).pushReplacementNamed(FeedsPage.tag);
+      Navigator.of(context).pushReplacementNamed(FeedsPage.tag);
     }
   }
 
