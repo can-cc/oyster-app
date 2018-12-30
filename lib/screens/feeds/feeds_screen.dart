@@ -3,26 +3,6 @@ import 'package:osyter_app/model/Feed.dart';
 import 'package:osyter_app/model/Feeds.dart';
 import 'package:osyter_app/screens/feeds/feeds_screen_presenter.dart';
 
-//Future<Atoms> fetchAtoms() async {
-//  final response =
-//      await http.get('http://192.168.50.77:7788/api/atoms/30?offset=0');
-//
-//  if (response.statusCode == 200) {
-//    // If server returns an OK response, parse the JSON
-//    var atoms = json.decode(response.body);
-//    return Atoms.fromJson(atoms);
-//  } else {
-//    // If that response was not OK, throw an error.
-//    throw Exception('Failed to load post');
-//  }
-//}
-
-//Future<List<int>> fakeRequest(int from, int to) async {
-//  return Future.delayed(Duration(seconds: 2), () {
-//    return List.generate(to - from, (i) => i + from);
-//  });
-//}
-
 class FeedsPage extends StatefulWidget {
   static String tag = 'feeds-page';
   FeedsPage({Key key, this.title}) : super(key: key);
@@ -121,7 +101,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
           if (index == items.length) {
             return _buildProgressIndicator();
           } else {
-            return ListTile(title: new Text(items[index].content));
+            return ListTile(title: new Text(items[index].title));
           }
         },
         controller: _scrollController,
