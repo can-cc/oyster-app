@@ -15,10 +15,13 @@ class FeedsPage extends StatefulWidget {
 }
 
 class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
+  FeedsScreenPresenter _presenter;
+
   List<Feed> items = List();
+
   ScrollController _scrollController = new ScrollController();
   bool isPerformingRequest = false;
-  FeedsScreenPresenter _presenter;
+
   int offset = 0;
 
   FeedsPageState() {
@@ -29,6 +32,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
   void initState() {
     super.initState();
     _getMoreData();
+
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
@@ -73,9 +77,16 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
   _getMoreData() {
     if (!isPerformingRequest) {
       setState(() => isPerformingRequest = true);
-      _presenter.queryFeeds(30, offset);
-      // List<Atom> newEntries = (await fetchAtoms()).items; //returns empty list
+      _presenter.queryMoreFeeds(30, offset);
     }
+  }
+
+  Future<Null> _handleRefresh() async {
+    final Feeds feeds = await _presenter.getHeadFeeds(30);
+    setState(() {
+      items.clear();
+      items.addAll(feeds.items);
+    });
   }
 
   Widget _buildProgressIndicator() {
@@ -93,20 +104,21 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: AppBar(
-        title: Text("Feeds"),
-      ),
-      body: ListView.builder(
-        itemCount: items.length + 1,
-        itemBuilder: (context, index) {
-          if (index == items.length) {
-            return _buildProgressIndicator();
-          } else {
-            return FeedListItem(feed: items[index]);
-          }
-        },
-        controller: _scrollController,
-      ),
-    );
+        appBar: AppBar(
+          title: Text("Feeds"),
+        ),
+        body: new RefreshIndicator(
+            child: ListView.builder(
+              itemCount: items.length + 1,
+              itemBuilder: (context, index) {
+                if (index == items.length) {
+                  return _buildProgressIndicator();
+                } else {
+                  return FeedListItem(feed: items[index]);
+                }
+              },
+              controller: _scrollController,
+            ),
+            onRefresh: _handleRefresh));
   }
 }

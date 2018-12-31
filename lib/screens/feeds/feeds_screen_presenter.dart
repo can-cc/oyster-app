@@ -11,7 +11,11 @@ class FeedsScreenPresenter {
   RestDataSource api = new RestDataSource();
   FeedsScreenPresenter(this._view);
 
-  queryFeeds(int limit, int offset) async {
+  Future<Feeds> getHeadFeeds(int limit) async {
+    return await api.getFeeds(limit, 0);
+  }
+
+  queryMoreFeeds(int limit, int offset) async {
     try {
       final Feeds feeds = await api.getFeeds(limit, offset);
       _view.onFeedReceived(feeds);
