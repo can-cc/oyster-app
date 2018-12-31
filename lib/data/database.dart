@@ -27,7 +27,7 @@ class AppDatabase {
     // Get a location using path_provider
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "app.db");
-    db = await openDatabase(path, version: 2,
+    db = await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       // When creating the db, create the table
       print("db version: ${version}.");
@@ -54,6 +54,7 @@ class AppDatabase {
   }
 
   Future<int> saveUser(User user) async {
+    print("save user ${user.toMap()}");
     var db = await _getDb();
     int res = await db.insert("User", user.toMap());
     return res;
@@ -66,7 +67,7 @@ class AppDatabase {
 
   Future<int> saveAuthToken(String token) async {
     var db = await _getDb();
-    var res = await db.insert("token", {"token": token});
+    var res = await db.insert("Token", {"token": token});
     return res;
   }
 
@@ -77,7 +78,7 @@ class AppDatabase {
 
   Future<String> getAuthToken() async {
     var db = await _getDb();
-    var res = await db.query("User");
+    var res = await db.query("Token");
     return res.first["token"];
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:osyter_app/model/Feed.dart';
 import 'package:osyter_app/model/Feeds.dart';
+import 'package:osyter_app/screens/feeds/feed_list_item.dart';
 import 'package:osyter_app/screens/feeds/feeds_screen_presenter.dart';
 
 class FeedsPage extends StatefulWidget {
@@ -101,7 +102,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
           if (index == items.length) {
             return _buildProgressIndicator();
           } else {
-            return ListTile(title: new Text(items[index].title));
+            return FeedListItem(feed: items[index]);
           }
         },
         controller: _scrollController,

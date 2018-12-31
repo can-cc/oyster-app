@@ -23,9 +23,11 @@ class AuthStateProvider {
     var db = AppDatabase.get();
     var isLoggedIn = await db.isLoggedIn();
     if (isLoggedIn) {
-      notify(AuthState.LOGGED_IN);
       authToken = await db.getAuthToken();
+      notify(AuthState.LOGGED_IN);
+      print("auth get token");
     } else {
+      print("Login fail");
       notify(AuthState.LOGGED_OUT);
     }
   }
@@ -46,8 +48,6 @@ class AuthStateProvider {
 
   void setAuthToken(String token) async {
     var db = AppDatabase.get();
-    print("token");
-    print(token);
     authToken = token;
     await db.saveAuthToken(token);
   }
@@ -57,6 +57,7 @@ class AuthStateProvider {
   }
 
   void logout() async {
+    print("logout func");
     notify(AuthState.LOGGED_OUT);
     var db = AppDatabase.get();
     await db.clearAuthToken();

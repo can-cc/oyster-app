@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:osyter_app/auth.dart';
 import 'package:osyter_app/data/database.dart';
 import 'package:osyter_app/model/User.dart';
-import 'package:osyter_app/screens/login/login-screen-presenter.dart';
 import 'package:osyter_app/screens/feeds/feeds_screen.dart';
+import 'package:osyter_app/screens/login/login-screen-presenter.dart';
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page';
@@ -34,6 +34,7 @@ class LoginPageState extends State<LoginPage>
 
   @override
   onAuthStateChanged(AuthState state) {
+    print("---------- login screen changed");
     if (state == AuthState.LOGGED_IN) {
       Navigator.of(context).pushReplacementNamed(FeedsPage.tag);
     }
