@@ -34,7 +34,6 @@ class LoginPageState extends State<LoginPage>
 
   @override
   onAuthStateChanged(AuthState state) {
-    print("---------- login screen changed");
     if (state == AuthState.LOGGED_IN) {
       Navigator.of(context).pushReplacementNamed(FeedsPage.tag);
     }

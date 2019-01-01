@@ -112,6 +112,9 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
             child: ListView.builder(
               itemCount: items.length + 1,
               itemBuilder: (context, index) {
+                if (index.isOdd) {
+                  return Divider();
+                }
                 if (index == items.length) {
                   return _buildProgressIndicator();
                 } else {
