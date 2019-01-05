@@ -23,6 +23,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
   bool isPerformingRequest = false;
 
   int offset = 0;
+  final queryCount = 30;
 
   FeedsPageState() {
     _presenter = new FeedsScreenPresenter(this);
@@ -60,7 +61,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
             curve: Curves.easeOut);
       }
     }
-    offset += 30;
+    offset += queryCount;
     setState(() {
       items.addAll(newFeeds.items);
       isPerformingRequest = false;
@@ -77,16 +78,17 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
   _getMoreData() {
     if (!isPerformingRequest) {
       setState(() => isPerformingRequest = true);
-      _presenter.queryMoreFeeds(30, offset);
+      _presenter.queryMoreFeeds(queryCount, offset);
     }
   }
 
   Future<Null> _handleRefresh() async {
-    final Feeds feeds = await _presenter.getHeadFeeds(30);
+    final Feeds feeds = await _presenter.getHeadFeeds(queryCount);
     setState(() {
       items.clear();
       items.addAll(feeds.items);
-      offset = 0;
+      offset = queryCount;
+      print(offset);
     });
   }
 

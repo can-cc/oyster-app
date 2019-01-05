@@ -23,12 +23,21 @@ class FeedListItemState extends State<FeedListItem> {
     });
   }
 
+  _handleTap() async {
+    if (!isFavorite) {
+      await widget.feed.markFeedFavorite();
+    }
+    setState(() {
+      isFavorite = widget.feed.marks.length > 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
         title: Text(widget.feed.title),
         trailing: new Icon(isFavorite ? Icons.favorite : Icons.favorite_border,
             color: Colors.red),
-        onTap: () {});
+        onTap: _handleTap);
   }
 }

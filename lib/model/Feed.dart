@@ -1,3 +1,4 @@
+import 'package:osyter_app/data/rest_ds.dart';
 import 'package:osyter_app/model/FeedMark.dart';
 
 class Feed {
@@ -7,6 +8,8 @@ class Feed {
   String _content;
   String _createdAt;
   List<FeedMark> _marks;
+
+  RestDataSource api = new RestDataSource();
 
   Feed.map(dynamic obj) {
     this._id = obj["id"].toString();
@@ -30,5 +33,10 @@ class Feed {
     map["content"] = _content;
     map["createdAt"] = _createdAt;
     return map;
+  }
+
+  Future<Feed> markFeedFavorite() async {
+    final FeedMark mark = await api.markFeedFavorite(_id);
+    _marks.add(mark);
   }
 }

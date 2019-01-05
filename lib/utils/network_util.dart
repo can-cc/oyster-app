@@ -37,16 +37,14 @@ class NetworkUtil {
 
   Future<dynamic> getByAuth(String url) {
     final token = _authStateProvider.getAuthToken();
-    print(token);
-    print("----");
     return http.get(url, headers: {"Authorization": token}).then(
         (http.Response response) {
       final String res = response.body;
       final int statusCode = response.statusCode;
 
-//      if (statusCode == 401) {
-//        _authStateProvider.logout();
-//      }
+      if (statusCode == 401) {
+        _authStateProvider.logout();
+      }
 
       if (statusCode < 200 || statusCode > 400 || json == null) {
         throw new Exception("Error while fetching data");
@@ -55,9 +53,11 @@ class NetworkUtil {
     });
   }
 
-  Future<ApiResult> postWithHeader(String url, {Map body}) {
+  Future<ApiResult> postByAuth(String url, {Map body}) {
+    final token = _authStateProvider.getAuthToken();
     return http.post(url, body: json.encode(body), headers: {
-      "content-type": "application/json; charset=utf-8"
+      "content-type": "application/json; charset=utf-8",
+      "Authorization": token
     }).then((http.Response response) {
       final String res = response.body;
       final int statusCode = response.statusCode;
@@ -65,7 +65,8 @@ class NetworkUtil {
       if (statusCode < 200 || statusCode > 400 || json == null) {
         throw new Exception("Error while fetching data");
       }
-      return new ApiResult(_decoder.convert(res), response.headers);
+      return new ApiResult(
+          res.isEmpty ? null : _decoder.convert(res), response.headers);
     });
   }
 }
