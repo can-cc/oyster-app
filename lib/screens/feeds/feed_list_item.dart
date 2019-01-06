@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:osyter_app/model/Feed.dart';
+import 'package:osyter_app/screens/feed_detail/feed_detail_screen.dart';
 
 class FeedListItem extends StatefulWidget {
   FeedListItem({Feed feed})
@@ -23,7 +24,7 @@ class FeedListItemState extends State<FeedListItem> {
     });
   }
 
-  _handleTap() async {
+  _handleIconTap() async {
     if (!isFavorite) {
       await widget.feed.markFeedFavorite();
     }
@@ -32,12 +33,25 @@ class FeedListItemState extends State<FeedListItem> {
     });
   }
 
+  _handleTap(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => FeedDetailPage(feed: widget.feed),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
         title: Text(widget.feed.title),
-        trailing: new Icon(isFavorite ? Icons.favorite : Icons.favorite_border,
-            color: Colors.red),
-        onTap: _handleTap);
+        trailing: IconButton(
+            icon: new Icon(isFavorite ? Icons.favorite : Icons.favorite_border,
+                color: Colors.red),
+            onPressed: _handleIconTap),
+        onTap: () {
+          _handleTap(context);
+        });
   }
 }

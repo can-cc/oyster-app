@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:osyter_app/screens/feed_detail/feed_detail_screen.dart';
 import 'package:osyter_app/screens/feeds/feeds_screen.dart';
 
 import './screens/login-screen.dart';
@@ -11,6 +12,7 @@ class MyApp extends StatelessWidget {
   final routes = <String, WidgetBuilder>{
     FeedsPage.tag: (context) => FeedsPage(),
     LoginPage.tag: (context) => LoginPage(),
+    FeedDetailPage.tag: (context) => FeedDetailPage()
   };
 
   @override
