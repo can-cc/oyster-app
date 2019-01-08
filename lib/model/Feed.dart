@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:osyter_app/data/rest_ds.dart';
 import 'package:osyter_app/model/FeedMark.dart';
 
@@ -16,13 +17,19 @@ class Feed {
     this._title = obj["title"];
     this._originHref = obj["originHref"];
     this._content = obj["content"];
-    this._createdAt = obj["createdAt"];
+
+    var createdAt = DateTime.parse(obj["createdAt"]);
+    var formatter = new DateFormat('yyyy-MM-dd');
+    String formattedCreatedAt = formatter.format(createdAt);
+    this._createdAt = formattedCreatedAt;
+
     this._marks =
         obj["marks"].map<FeedMark>((mark) => FeedMark.map(mark)).toList();
   }
 
   String get title => _title;
   String get content => _content;
+  String get createdAt => _createdAt;
   List<FeedMark> get marks => _marks;
 
   Map<String, dynamic> toMap() {

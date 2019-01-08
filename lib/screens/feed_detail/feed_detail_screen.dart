@@ -86,9 +86,13 @@ class FeedDetailPageState extends State<FeedDetailPage> {
         ]),
         body: Center(
           child: ListView(
-            padding: EdgeInsets.only(left: 24.0, right: 24.0),
+            padding: EdgeInsets.only(left: 12.0, right: 12.0, top: 12),
             children: <Widget>[
-              Text(widget.feed.title),
+              Text(widget.feed.title,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+              Text(widget.feed.createdAt,
+                  style:
+                      TextStyle(fontWeight: FontWeight.normal, fontSize: 12)),
               new Html(data: widget.feed.content),
             ],
           ),
