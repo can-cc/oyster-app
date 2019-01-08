@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       title: 'Oyster',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.lightBlue,
+        primaryColor: Colors.white,
         fontFamily: 'Nunito',
       ),
       home: LoginPage(),

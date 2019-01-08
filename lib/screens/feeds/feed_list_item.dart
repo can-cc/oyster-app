@@ -7,7 +7,7 @@ class FeedListItem extends StatefulWidget {
       : feed = feed,
         super();
 
-  final Feed feed;
+  Feed feed;
 
   @override
   createState() => new FeedListItemState();
@@ -47,8 +47,8 @@ class FeedListItemState extends State<FeedListItem> {
     return ListTile(
         title: Text(widget.feed.title),
         trailing: IconButton(
-            icon: new Icon(isFavorite ? Icons.favorite : Icons.favorite_border,
-                color: Colors.red),
+            icon: new Icon(isFavorite ? Icons.star : Icons.star_border,
+                size: 30, color: Colors.amber),
             onPressed: _handleIconTap),
         onTap: () {
           _handleTap(context);

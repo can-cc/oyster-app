@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:osyter_app/data/rest_ds.dart';
 import 'package:osyter_app/model/FeedMark.dart';
+import 'package:osyter_app/model/FeedSource.dart';
 
 class Feed {
   String _id;
@@ -8,6 +9,7 @@ class Feed {
   String _originHref;
   String _content;
   String _createdAt;
+  FeedSource _source;
   List<FeedMark> _marks;
 
   RestDataSource api = new RestDataSource();
@@ -25,12 +27,14 @@ class Feed {
 
     this._marks =
         obj["marks"].map<FeedMark>((mark) => FeedMark.map(mark)).toList();
+    this._source = FeedSource.map(obj["source"]);
   }
 
   String get title => _title;
   String get content => _content;
   String get createdAt => _createdAt;
   List<FeedMark> get marks => _marks;
+  FeedSource get source => _source;
 
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();

@@ -3,7 +3,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:osyter_app/model/Feed.dart';
 
 class FeedDetailPage extends StatefulWidget {
-  final Feed feed;
+  Feed feed;
   static String tag = 'feed-detail';
 
   FeedDetailPage({Key key, @required this.feed}) : super(key: key);
@@ -29,7 +29,7 @@ const List<Choice> choices = const <Choice>[
 ];
 
 class FeedDetailPageState extends State<FeedDetailPage> {
-  Feed feed;
+  bool isFavorite;
 
   Choice _selectedChoice = choices[0]; // The app's "state".
 
@@ -45,6 +45,18 @@ class FeedDetailPageState extends State<FeedDetailPage> {
   @override
   void initState() {
     super.initState();
+    setState(() {
+      isFavorite = widget.feed.marks.length > 0;
+    });
+  }
+
+  _handleIconTap() async {
+    if (!isFavorite) {
+      await widget.feed.markFeedFavorite();
+    }
+    setState(() {
+      isFavorite = widget.feed.marks.length > 0;
+    });
   }
 
   @override
@@ -65,24 +77,13 @@ class FeedDetailPageState extends State<FeedDetailPage> {
           ),
           // action button
           IconButton(
-            icon: Icon(choices[1].icon),
+            icon: new Icon(isFavorite ? Icons.star : Icons.star_border,
+                size: 26, color: Colors.amber),
             onPressed: () {
-              _select(choices[1]);
+              _handleIconTap();
             },
           ),
           // overflow menu
-          PopupMenuButton<Choice>(
-            onSelected: _select,
-            offset: Offset(0, 50),
-            itemBuilder: (BuildContext context) {
-              return [
-                PopupMenuItem(
-                  value: choices[0],
-                  child: Text("Option"),
-                )
-              ];
-            },
-          ),
         ]),
         body: Center(
           child: ListView(
@@ -90,9 +91,16 @@ class FeedDetailPageState extends State<FeedDetailPage> {
             children: <Widget>[
               Text(widget.feed.title,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+              SizedBox(
+                height: 10,
+              ),
               Text(widget.feed.createdAt,
                   style:
                       TextStyle(fontWeight: FontWeight.normal, fontSize: 12)),
+              SizedBox(
+                height: 10,
+              ),
+              new Divider(),
               new Html(data: widget.feed.content),
             ],
           ),

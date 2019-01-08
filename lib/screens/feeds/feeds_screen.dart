@@ -88,7 +88,6 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
       items.clear();
       items.addAll(feeds.items);
       offset = queryCount;
-      print(offset);
     });
   }
 
