@@ -20,26 +20,8 @@ class Choice {
   final IconData icon;
 }
 
-const List<Choice> choices = const <Choice>[
-  const Choice(title: 'Car', icon: Icons.directions_car),
-  const Choice(title: 'Bicycle', icon: Icons.directions_bike),
-  const Choice(title: 'Boat', icon: Icons.directions_boat),
-  const Choice(title: 'Bus', icon: Icons.directions_bus),
-  const Choice(title: 'Train', icon: Icons.directions_railway),
-  const Choice(title: 'Walk', icon: Icons.directions_walk),
-];
-
 class FeedDetailPageState extends State<FeedDetailPage> {
   bool isFavorite;
-
-  Choice _selectedChoice = choices[0]; // The app's "state".
-
-  void _select(Choice choice) {
-    // Causes the app to rebuild with the new _selectedChoice.
-    setState(() {
-      _selectedChoice = choice;
-    });
-  }
 
   FeedDetailPageState() {}
 
@@ -71,7 +53,7 @@ class FeedDetailPageState extends State<FeedDetailPage> {
         appBar: AppBar(elevation: 2, actions: <Widget>[
           // action button
           IconButton(
-            icon: Icon(Icons.open_in_new, color: Colors.indigo),
+            icon: Icon(Icons.explore, color: Colors.lightBlue, size: 27),
             onPressed: () async {
               await launch(widget.feed.originHref);
             },

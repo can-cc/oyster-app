@@ -106,9 +106,37 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+        drawer: Drawer(
+            child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text('Drawer Header'),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+            ),
+            ListTile(
+              title: Text('Item 1'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+              },
+            ),
+            ListTile(
+              title: Text('Item 2'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+              },
+            ),
+          ],
+        )),
         appBar: AppBar(
-          title: Text("Feeds"),
-          elevation: 2,
+          iconTheme: IconThemeData(color: Colors.white),
+          title: Text("Feeds", style: TextStyle(color: Colors.white)),
+          backgroundColor: const Color(0xFF5D68FF),
         ),
         body: new RefreshIndicator(
             child: ListView.builder(
