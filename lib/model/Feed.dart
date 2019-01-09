@@ -33,6 +33,7 @@ class Feed {
   String get title => _title;
   String get content => _content;
   String get createdAt => _createdAt;
+  String get originHref => _originHref;
   List<FeedMark> get marks => _marks;
   FeedSource get source => _source;
 

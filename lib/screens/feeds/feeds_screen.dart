@@ -108,6 +108,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
     return new Scaffold(
         appBar: AppBar(
           title: Text("Feeds"),
+          elevation: 2,
         ),
         body: new RefreshIndicator(
             child: ListView.builder(

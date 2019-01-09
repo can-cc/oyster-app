@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:osyter_app/model/Feed.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FeedDetailPage extends StatefulWidget {
   Feed feed;
@@ -67,18 +68,18 @@ class FeedDetailPageState extends State<FeedDetailPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: AppBar(actions: <Widget>[
+        appBar: AppBar(elevation: 2, actions: <Widget>[
           // action button
           IconButton(
-            icon: Icon(choices[0].icon),
-            onPressed: () {
-              _select(choices[0]);
+            icon: Icon(Icons.open_in_new, color: Colors.indigo),
+            onPressed: () async {
+              await launch(widget.feed.originHref);
             },
           ),
           // action button
           IconButton(
             icon: new Icon(isFavorite ? Icons.star : Icons.star_border,
-                size: 26, color: Colors.amber),
+                size: 29, color: Colors.amber),
             onPressed: () {
               _handleIconTap();
             },
