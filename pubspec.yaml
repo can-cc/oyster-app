@@ -16,6 +16,7 @@ dependencies:
   flutter_html: ^0.8.2
   flutter_html_view: "^0.3.1"
   sqflite: any
+  rxdart: ^0.20.0
   url_launcher: "4.0.3"
   path_provider: "^0.4.1"
   intl: any

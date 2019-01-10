@@ -21,7 +21,7 @@ class Feed {
     this._content = obj["content"];
 
     var createdAt = DateTime.parse(obj["createdAt"]);
-    var formatter = new DateFormat('yyyy-MM-dd HH:mm:ss');
+    var formatter = new DateFormat('yyyy-MM-dd  HH:mm:ss');
     String formattedCreatedAt = formatter.format(createdAt);
     this._createdAt = formattedCreatedAt;
 

@@ -32,6 +32,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
   @override
   void initState() {
     super.initState();
+
     _getMoreData();
 
     _scrollController.addListener(() {
@@ -134,16 +135,16 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
           ],
         )),
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.white),
-          title: Text("Feeds", style: TextStyle(color: Colors.white)),
-          backgroundColor: const Color(0xFF5D68FF),
-        ),
+            iconTheme: IconThemeData(color: Colors.white),
+            title: Text("All Feeds", style: TextStyle(color: Colors.white))),
         body: new RefreshIndicator(
             child: ListView.builder(
               itemCount: items.length + 1,
               itemBuilder: (context, index) {
                 if (index.isOdd) {
-                  return Divider();
+                  return Divider(
+                    height: 8,
+                  );
                 }
                 if (index == items.length) {
                   return _buildProgressIndicator();

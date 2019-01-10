@@ -53,7 +53,7 @@ class FeedDetailPageState extends State<FeedDetailPage> {
         appBar: AppBar(elevation: 2, actions: <Widget>[
           // action button
           IconButton(
-            icon: Icon(Icons.explore, color: Colors.lightBlue, size: 27),
+            icon: Icon(Icons.explore, color: Colors.white, size: 27),
             onPressed: () async {
               await launch(widget.feed.originHref);
             },
@@ -84,7 +84,13 @@ class FeedDetailPageState extends State<FeedDetailPage> {
                 height: 10,
               ),
               new Divider(),
+              SizedBox(
+                height: 10,
+              ),
               new Html(data: widget.feed.content),
+              SizedBox(
+                height: 30,
+              ),
             ],
           ),
         ));
