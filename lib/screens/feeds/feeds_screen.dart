@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:osyter_app/data/repository.dart';
 import 'package:osyter_app/model/Feed.dart';
+import 'package:osyter_app/model/FeedSource.dart';
 import 'package:osyter_app/model/Feeds.dart';
 import 'package:osyter_app/screens/feeds/feed_list_item.dart';
 import 'package:osyter_app/screens/feeds/feeds_screen_presenter.dart';
@@ -18,9 +20,14 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
   FeedsScreenPresenter _presenter;
 
   List<Feed> items = List();
+  List<FeedSource> sources = List();
 
   ScrollController _scrollController = new ScrollController();
   bool isPerformingRequest = false;
+
+  Repository repository = Repository.get();
+
+  var sourceListener;
 
   int offset = 0;
   final queryCount = 30;
@@ -32,6 +39,15 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
   @override
   void initState() {
     super.initState();
+
+    repository.refreshFeedSource();
+
+    sourceListener =
+        repository.getFeedSource$().listen((List<FeedSource> sources) {
+      setState(() {
+        sources = sources;
+      });
+    });
 
     _getMoreData();
 
@@ -46,6 +62,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
   @override
   void dispose() {
     _scrollController.dispose();
+    sourceListener.cancel();
     super.dispose();
   }
 

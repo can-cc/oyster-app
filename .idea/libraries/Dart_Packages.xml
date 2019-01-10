@@ -177,6 +177,13 @@
             </list>
           </value>
         </entry>
+        <entry key="rxdart">
+          <value>
+            <list>
+              <option value="$USER_HOME$/software/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.20.0/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="shared_preferences">
           <value>
             <list>
@@ -308,6 +315,7 @@
       <root url="file://$USER_HOME$/software/flutter/.pub-cache/hosted/pub.dartlang.org/path-1.6.2/lib" />
       <root url="file://$USER_HOME$/software/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-0.4.1/lib" />
       <root url="file://$USER_HOME$/software/flutter/.pub-cache/hosted/pub.dartlang.org/quiver-2.0.1/lib" />
+      <root url="file://$USER_HOME$/software/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.20.0/lib" />
       <root url="file://$USER_HOME$/software/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.4.3/lib" />
       <root url="file://$USER_HOME$/software/flutter/.pub-cache/hosted/pub.dartlang.org/source_span-1.4.1/lib" />
       <root url="file://$USER_HOME$/software/flutter/.pub-cache/hosted/pub.dartlang.org/sqflite-0.13.0/lib" />

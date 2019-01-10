@@ -8,6 +8,7 @@ class FeedSource {
   }
 
   String get id => _id;
+
   String get name => _name;
 
   Map<String, dynamic> toMap() {
@@ -16,4 +17,5 @@ class FeedSource {
     map["name"] = _name;
     return map;
   }
+
 }

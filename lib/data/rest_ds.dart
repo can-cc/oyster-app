@@ -1,4 +1,5 @@
 import 'package:osyter_app/model/FeedMark.dart';
+import 'package:osyter_app/model/FeedSource.dart';
 import 'package:osyter_app/model/Feeds.dart';
 import 'package:osyter_app/utils/network_util.dart';
 
@@ -26,5 +27,15 @@ class RestDataSource {
     final ApiResult result = await _netUtil
         .postByAuth("${SERVER_HOST}/api/feed/${feedId}/favorite", body: {});
     return FeedMark.map(result.body);
+  }
+
+  Future<List<FeedSource>> getFeedSources() {
+    return _netUtil
+        .getByAuth("${SERVER_HOST}/api/feed-sources")
+        .then((dynamic feedSources) {
+      return feedSources
+          .map<FeedSource>((source) => FeedSource.map(source))
+          .toList();
+    });
   }
 }
