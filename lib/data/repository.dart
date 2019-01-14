@@ -12,6 +12,10 @@ class Repository {
   final Subject<List<FeedSource>> _sources$ =
       BehaviorSubject(seedValue: List());
 
+  final Subject<List<Feed>> _feeds$ = BehaviorSubject(seedValue: List());
+  final Subject<List<String>> _feedIds$ = BehaviorSubject(seedValue: List());
+  final Subject<dynamic> _feedUpdate$ = BehaviorSubject();
+
   AppDatabase database;
 
   static Repository get() {

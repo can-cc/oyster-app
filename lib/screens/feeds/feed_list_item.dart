@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:osyter_app/model/Feed.dart';
 import 'package:osyter_app/screens/feed_detail/feed_detail_screen.dart';
 
+typedef OnBack = void Function(Feed feed);
+
 class FeedListItem extends StatefulWidget {
-  FeedListItem({Feed feed})
+  FeedListItem({Feed feed, this.onBack})
       : feed = feed,
         super();
 
   Feed feed;
+  OnBack onBack;
 
   @override
   createState() => new FeedListItemState();
@@ -33,13 +36,14 @@ class FeedListItemState extends State<FeedListItem> {
     });
   }
 
-  _handleTap(BuildContext context) {
-    Navigator.push(
+  _handleTap(BuildContext context) async {
+    final result = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => FeedDetailPage(feed: widget.feed),
       ),
     );
+    widget.onBack(widget.feed);
   }
 
   @override

@@ -17,5 +17,4 @@ class FeedSource {
     map["name"] = _name;
     return map;
   }
-
 }

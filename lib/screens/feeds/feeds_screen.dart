@@ -20,7 +20,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
   FeedsScreenPresenter _presenter;
 
   List<Feed> items = List();
-  List<FeedSource> sources = List();
+  List<FeedSource> _sources = List();
 
   ScrollController _scrollController = new ScrollController();
   bool isPerformingRequest = false;
@@ -45,7 +45,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
     sourceListener =
         repository.getFeedSource$().listen((List<FeedSource> sources) {
       setState(() {
-        sources = sources;
+        _sources = sources;
       });
     });
 
@@ -100,10 +100,24 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
     }
   }
 
+  void _handleBack(Feed feed) async {
+    print("handleBack");
+    await setState(() {
+      final int index = items.indexOf(feed);
+      print(feed.marks);
+      print(items.length);
+      items = items..replaceRange(index, index + 2, [feed]);
+      this.build(context);
+      print(items.length);
+    });
+  }
+
   Future<Null> _handleRefresh() async {
-    final Feeds feeds = await _presenter.getHeadFeeds(queryCount);
     setState(() {
       items.clear();
+    });
+    final Feeds feeds = await _presenter.getHeadFeeds(queryCount);
+    setState(() {
       items.addAll(feeds.items);
       offset = queryCount;
     });
@@ -123,32 +137,38 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
 
   @override
   Widget build(BuildContext context) {
+    final drawerSourcesList = _sources.map((FeedSource feedSource) {
+      return ListTile(title: Text(feedSource.name), onTap: () {});
+    }).toList();
+
+    final drawerChilren = drawerSourcesList;
+
     return new Scaffold(
         drawer: Drawer(
-            child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
+            child: new Column(
+          mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             DrawerHeader(
               child: Text('Drawer Header'),
+              padding: EdgeInsets.zero,
+              margin: EdgeInsets.zero,
               decoration: BoxDecoration(
                 color: Colors.blue,
               ),
             ),
-            ListTile(
-              title: Text('Item 1'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-              },
+            new Expanded(
+              flex: 10,
+              child: new Align(
+                alignment: FractionalOffset.center,
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: drawerChilren,
+                ),
+              ),
             ),
-            ListTile(
-              title: Text('Item 2'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-              },
-            ),
+            new Expanded(
+              child: ListTile(title: Text('Setting'), onTap: () {}),
+            )
           ],
         )),
         appBar: AppBar(
@@ -166,7 +186,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
                 if (index == items.length) {
                   return _buildProgressIndicator();
                 } else {
-                  return FeedListItem(feed: items[index]);
+                  return FeedListItem(feed: items[index], onBack: _handleBack);
                 }
               },
               controller: _scrollController,

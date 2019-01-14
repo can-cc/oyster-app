@@ -13,13 +13,6 @@ class FeedDetailPage extends StatefulWidget {
   FeedDetailPageState createState() => new FeedDetailPageState();
 }
 
-class Choice {
-  const Choice({this.title, this.icon});
-
-  final String title;
-  final IconData icon;
-}
-
 class FeedDetailPageState extends State<FeedDetailPage> {
   bool isFavorite;
 
