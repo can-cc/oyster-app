@@ -43,6 +43,10 @@ class FeedListItemState extends State<FeedListItem> {
         builder: (context) => FeedDetailPage(feed: widget.feed),
       ),
     );
+
+    setState(() {
+      isFavorite = widget.feed.marks.length > 0;
+    });
     widget.onBack(widget.feed);
   }
 

@@ -9,6 +9,7 @@ class Feed {
   String _originHref;
   String _content;
   String _createdAt;
+  String _originCreatedAt;
   FeedSource _source;
   List<FeedMark> _marks;
 
@@ -19,6 +20,7 @@ class Feed {
     this._title = obj["title"];
     this._originHref = obj["originHref"];
     this._content = obj["content"];
+    this._originCreatedAt = obj["createdAt"];
 
     var createdAt = DateTime.parse(obj["createdAt"]);
     var formatter = new DateFormat('yyyy-MM-dd  HH:mm:ss');
@@ -29,6 +31,8 @@ class Feed {
         obj["marks"].map<FeedMark>((mark) => FeedMark.map(mark)).toList();
     this._source = FeedSource.map(obj["source"]);
   }
+
+  set id(id) => _id = id;
 
   String get title => _title;
   String get content => _content;
@@ -43,7 +47,9 @@ class Feed {
     map["title"] = _title;
     map["originHref"] = _originHref;
     map["content"] = _content;
-    map["createdAt"] = _createdAt;
+    map["createdAt"] = _originCreatedAt;
+    map["source"] = _source.toMap();
+    map["marks"] = _marks.map((m) => m.toMap());
     return map;
   }
 

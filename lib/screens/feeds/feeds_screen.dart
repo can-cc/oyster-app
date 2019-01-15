@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:osyter_app/data/repository.dart';
 import 'package:osyter_app/model/Feed.dart';
@@ -100,17 +102,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
     }
   }
 
-  void _handleBack(Feed feed) async {
-    print("handleBack");
-    await setState(() {
-      final int index = items.indexOf(feed);
-      print(feed.marks);
-      print(items.length);
-      items = items..replaceRange(index, index + 2, [feed]);
-      this.build(context);
-      print(items.length);
-    });
-  }
+  void _handleBack(Feed feed) {}
 
   Future<Null> _handleRefresh() async {
     setState(() {
@@ -141,7 +133,11 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
       return ListTile(title: Text(feedSource.name), onTap: () {});
     }).toList();
 
-    final drawerChilren = drawerSourcesList;
+    final drawerChilren = [
+          ListTile(title: Text('All')),
+          ListTile(title: Text('Stared'))
+        ].toList() +
+        drawerSourcesList;
 
     return new Scaffold(
         drawer: Drawer(
