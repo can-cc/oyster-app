@@ -134,8 +134,16 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
     }).toList();
 
     final drawerChilren = [
-          ListTile(title: Text('All')),
-          ListTile(title: Text('Stared'))
+          ListTile(
+              title: Text('All'),
+              onTap: () {
+                Navigator.of(context).pop();
+              }),
+          ListTile(
+              title: Text('Stared'),
+              onTap: () {
+                Navigator.of(context).pop();
+              })
         ].toList() +
         drawerSourcesList;
 
@@ -144,14 +152,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
             child: new Column(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            DrawerHeader(
-              child: Text('Drawer Header'),
-              padding: EdgeInsets.zero,
-              margin: EdgeInsets.zero,
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-            ),
+            UserAccountsDrawerHeader(accountName: Text("test user")),
             new Expanded(
               flex: 10,
               child: new Align(
@@ -161,6 +162,9 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
                   children: drawerChilren,
                 ),
               ),
+            ),
+            new Expanded(
+              child: ListTile(title: Text('Feed Sources'), onTap: () {}),
             ),
             new Expanded(
               child: ListTile(title: Text('Setting'), onTap: () {}),

@@ -29,6 +29,11 @@ class RestDataSource {
     return FeedMark.map(result.body);
   }
 
+  Future<void> removeFeedFavoriteMark(String feedId, String markId) async {
+    await _netUtil
+        .deleteByAuth("${SERVER_HOST}/api/feed/${feedId}/favorite/${markId}");
+  }
+
   Future<List<FeedSource>> getFeedSources() {
     return _netUtil
         .getByAuth("${SERVER_HOST}/api/feed-sources")

@@ -29,6 +29,8 @@ class FeedDetailPageState extends State<FeedDetailPage> {
   _handleIconTap() async {
     if (!isFavorite) {
       await widget.feed.markFeedFavorite();
+    } else {
+      await widget.feed.removeFeedFavoriteMark();
     }
     setState(() {
       isFavorite = widget.feed.marks.length > 0;

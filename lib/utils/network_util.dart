@@ -35,6 +35,23 @@ class NetworkUtil {
     });
   }
 
+  Future<dynamic> deleteByAuth(String url) {
+    final token = _authStateProvider.getAuthToken();
+    return http.delete(url, headers: {"Authorization": token}).then(
+        (http.Response response) {
+      final String res = response.body;
+      final int statusCode = response.statusCode;
+
+      if (statusCode == 401) {
+        _authStateProvider.logout();
+      }
+
+      if (statusCode < 200 || statusCode > 400 || json == null) {
+        throw new Exception("Error while fetching data");
+      }
+    });
+  }
+
   Future<dynamic> getByAuth(String url) {
     final token = _authStateProvider.getAuthToken();
     return http.get(url, headers: {"Authorization": token}).then(

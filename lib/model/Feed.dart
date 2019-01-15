@@ -57,4 +57,9 @@ class Feed {
     final FeedMark mark = await api.markFeedFavorite(_id);
     _marks.add(mark);
   }
+
+  Future<void> removeFeedFavoriteMark() async {
+    await api.removeFeedFavoriteMark(_id, _marks[0].id);
+    _marks.clear();
+  }
 }
