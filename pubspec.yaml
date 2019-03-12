@@ -20,6 +20,7 @@ dependencies:
   url_launcher: "4.0.3"
   path_provider: "^0.4.1"
   intl: any
+  flutter_launcher_icons: any
   flutter:
     sdk: flutter
 
@@ -31,6 +32,10 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+flutter_icons:
+  image_path: "assets/logo.png"
+  android: true
+  ios: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec

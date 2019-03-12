@@ -83,6 +83,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
     }
     offset += queryCount;
     setState(() {
+      print(newFeeds.items);
       items.addAll(newFeeds.items);
       isPerformingRequest = false;
     });
@@ -152,7 +153,10 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
             child: new Column(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            UserAccountsDrawerHeader(accountName: Text("test user")),
+            UserAccountsDrawerHeader(
+              accountName: Text("test user"),
+              accountEmail: Text(""),
+            ),
             new Expanded(
               flex: 10,
               child: new Align(
@@ -162,9 +166,6 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
                   children: drawerChilren,
                 ),
               ),
-            ),
-            new Expanded(
-              child: ListTile(title: Text('Feed Sources'), onTap: () {}),
             ),
             new Expanded(
               child: ListTile(title: Text('Setting'), onTap: () {}),
