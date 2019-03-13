@@ -3,15 +3,27 @@ import 'package:osyter_app/model/FeedSource.dart';
 import 'package:osyter_app/model/Feeds.dart';
 import 'package:osyter_app/utils/network_util.dart';
 
-final SERVER_HOST = "http://192.168.50.77:7788";
+//final SERVER_HOST = "http://192.168.50.77:7788";
+
+//var
 
 class RestDataSource {
+  String SERVER_HOST;
+
   NetworkUtil _netUtil = new NetworkUtil();
 
-  static final LOGIN_URL = SERVER_HOST + "/api/login";
+  static RestDataSource _instance = new RestDataSource.internal();
+  RestDataSource.internal();
+  factory RestDataSource() => _instance;
+
+//  static final LOGIN_URL = SERVER_HOST + "/api/login";
+
+  void setServerEndPoint(String endpoint) {
+    SERVER_HOST = endpoint;
+  }
 
   Future<ApiResult> login(String username, String password) {
-    return _netUtil.postByAuth(LOGIN_URL,
+    return _netUtil.postByAuth(SERVER_HOST + "/api/login",
         body: {"username": username, "password": password});
   }
 
