@@ -80,6 +80,7 @@ class NetworkUtil {
       final int statusCode = response.statusCode;
 
       if (statusCode < 200 || statusCode > 400 || json == null) {
+        // TODO 明确报错，现在密码错误都是这个
         throw new Exception("Error while fetching data");
       }
       return new ApiResult(
