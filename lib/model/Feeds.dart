@@ -1,4 +1,4 @@
-import 'package:osyter_app/model/Feed.dart';
+import 'package:oyster/model/Feed.dart';
 
 class Feeds {
   final List<Feed> items;

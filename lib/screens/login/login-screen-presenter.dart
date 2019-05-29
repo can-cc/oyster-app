@@ -1,8 +1,8 @@
-import 'package:osyter_app/auth.dart';
-import 'package:osyter_app/data/database.dart';
-import 'package:osyter_app/data/rest_ds.dart';
-import 'package:osyter_app/model/User.dart';
-import 'package:osyter_app/utils/network_util.dart';
+import 'package:oyster/auth.dart';
+import 'package:oyster/data/database.dart';
+import 'package:oyster/data/rest_ds.dart';
+import 'package:oyster/model/User.dart';
+import 'package:oyster/utils/network_util.dart';
 
 abstract class LoginScreenContract {
   void onLoginSuccess(User user);

@@ -1,7 +1,7 @@
-import 'package:osyter_app/model/FeedMark.dart';
-import 'package:osyter_app/model/FeedSource.dart';
-import 'package:osyter_app/model/Feeds.dart';
-import 'package:osyter_app/utils/network_util.dart';
+import 'package:oyster/model/FeedMark.dart';
+import 'package:oyster/model/FeedSource.dart';
+import 'package:oyster/model/Feeds.dart';
+import 'package:oyster/utils/network_util.dart';
 
 //final SERVER_HOST = "http://192.168.50.77:7788";
 

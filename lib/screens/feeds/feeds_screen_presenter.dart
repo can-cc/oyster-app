@@ -1,5 +1,5 @@
-import 'package:osyter_app/data/rest_ds.dart';
-import 'package:osyter_app/model/Feeds.dart';
+import 'package:oyster/data/rest_ds.dart';
+import 'package:oyster/model/Feeds.dart';
 
 abstract class FeedsScreenContract {
   void onFeedReceived(Feeds newFeeds);

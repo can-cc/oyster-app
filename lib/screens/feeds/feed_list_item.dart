@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:osyter_app/model/Feed.dart';
-import 'package:osyter_app/screens/feed_detail/feed_detail_screen.dart';
+import 'package:oyster/model/Feed.dart';
+import 'package:oyster/screens/feed_detail/feed_detail_screen.dart';
 
 typedef OnBack = void Function(Feed feed);
 

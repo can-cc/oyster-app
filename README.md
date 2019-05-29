@@ -1,4 +1,4 @@
-# osyter_app
+# oyster
 
 A new Flutter project.
 

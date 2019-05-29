@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:osyter_app/auth.dart';
-import 'package:osyter_app/screens/feeds/feeds_screen.dart';
+import 'package:oyster/auth.dart';
+import 'package:oyster/screens/feeds/feeds_screen.dart';
 
 import './screens/login-screen.dart';
 

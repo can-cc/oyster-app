@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
-import 'package:osyter_app/data/rest_ds.dart';
-import 'package:osyter_app/model/FeedMark.dart';
-import 'package:osyter_app/model/FeedSource.dart';
+import 'package:oyster/data/rest_ds.dart';
+import 'package:oyster/model/FeedMark.dart';
+import 'package:oyster/model/FeedSource.dart';
 
 class Feed {
   String _id;

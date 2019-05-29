@@ -1,4 +1,4 @@
-import 'package:osyter_app/data/database.dart';
+import 'package:oyster/data/database.dart';
 
 enum AuthState { LOGGED_IN, LOGGED_OUT }
 

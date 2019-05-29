@@ -1,4 +1,4 @@
-package com.example.osyterapp;
+package com.example.oyster;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

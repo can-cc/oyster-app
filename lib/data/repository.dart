@@ -1,7 +1,7 @@
-import 'package:osyter_app/data/database.dart';
-import 'package:osyter_app/data/rest_ds.dart';
-import 'package:osyter_app/model/Feed.dart';
-import 'package:osyter_app/model/FeedSource.dart';
+import 'package:oyster/data/database.dart';
+import 'package:oyster/data/rest_ds.dart';
+import 'package:oyster/model/Feed.dart';
+import 'package:oyster/model/FeedSource.dart';
 import 'package:rxdart/rxdart.dart';
 
 class Repository {

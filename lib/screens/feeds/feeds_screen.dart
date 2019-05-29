@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:osyter_app/data/repository.dart';
-import 'package:osyter_app/model/Feed.dart';
-import 'package:osyter_app/model/FeedSource.dart';
-import 'package:osyter_app/model/Feeds.dart';
-import 'package:osyter_app/screens/feeds/feed_list_item.dart';
-import 'package:osyter_app/screens/feeds/feeds_screen_presenter.dart';
+import 'package:oyster/data/repository.dart';
+import 'package:oyster/model/Feed.dart';
+import 'package:oyster/model/FeedSource.dart';
+import 'package:oyster/model/Feeds.dart';
+import 'package:oyster/screens/feeds/feed_list_item.dart';
+import 'package:oyster/screens/feeds/feeds_screen_presenter.dart';
 
 class FeedsPage extends StatefulWidget {
   static String tag = 'feeds-page';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:osyter_app/app.dart';
-import 'package:osyter_app/app_config.dart';
-import 'package:osyter_app/data/rest_ds.dart';
+import 'package:oyster/app.dart';
+import 'package:oyster/app_config.dart';
+import 'package:oyster/data/rest_ds.dart';
 
 void main() {
   RestDataSource api = new RestDataSource();
@@ -9,7 +9,7 @@ void main() {
 
   var configuredApp = new AppConfig(
     appName: 'Oyster',
-    apiBaseUrl: 'https://feed.octopuese.xyz', // 暂时没用
+    apiBaseUrl: 'https://feed.octopuese.xyz',
     child: new MyApp(),
   );
 

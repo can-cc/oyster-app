@@ -1,11 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:osyter_app/auth.dart';
-import 'package:osyter_app/data/database.dart';
-import 'package:osyter_app/model/User.dart';
-import 'package:osyter_app/screens/feeds/feeds_screen.dart';
-import 'package:osyter_app/screens/login/login-screen-presenter.dart';
+import 'package:oyster/auth.dart';
+import 'package:oyster/data/database.dart';
+import 'package:oyster/model/User.dart';
+import 'package:oyster/screens/feeds/feeds_screen.dart';
+import 'package:oyster/screens/login/login-screen-presenter.dart';
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page';
