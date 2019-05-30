@@ -20,7 +20,7 @@ dependencies:
   url_launcher: "4.0.3"
   path_provider: "^0.4.1"
   intl: any
-  flutter_launcher_icons: any
+  flutter_launcher_icons: "^0.7.2"
   flutter:
     sdk: flutter
 
@@ -34,7 +34,8 @@ dev_dependencies:
 
 flutter_icons:
   image_path: "assets/logo.png"
-  android: true
+  android: "launcher_icon"
+  adaptive_icon_background: "assets/logo-bg.png"
   ios: true
 
 # For information on the generic Dart part of this file, see the
