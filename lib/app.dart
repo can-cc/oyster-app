@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:oyster/auth.dart';
 import 'package:oyster/screens/feeds/feeds_screen.dart';
 
-import './screens/login-screen.dart';
+import 'package:oyster/screens/login/login-screen.dart';
 
 class MyApp extends StatelessWidget implements AuthStateListener {
   // This widget is the root of your application.

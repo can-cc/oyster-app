@@ -55,11 +55,15 @@ class LoginPageState extends State<LoginPage>
 
   @override
   Widget build(BuildContext context) {
+    final topPadding = SizedBox(
+      height: 50,
+    );
+
     final logo = Hero(
       tag: 'hero',
       child: CircleAvatar(
         backgroundColor: Colors.transparent,
-        radius: 48.0,
+        radius: 68.0,
         child: Image.asset('assets/logo.png'),
       ),
     );
@@ -81,10 +85,6 @@ class LoginPageState extends State<LoginPage>
 
     var loginForm = new Column(
       children: <Widget>[
-        new Text(
-          "Login App",
-          textScaleFactor: 1.5,
-        ),
         new Form(
           key: formKey,
           child: new Column(
@@ -132,7 +132,7 @@ class LoginPageState extends State<LoginPage>
       body: Center(
         child: ListView(
           padding: EdgeInsets.only(left: 24.0, right: 24.0),
-          children: <Widget>[logo, loginForm, forgotLabel],
+          children: <Widget>[topPadding, logo, loginForm, forgotLabel],
         ),
       ),
     );
