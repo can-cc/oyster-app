@@ -7,6 +7,7 @@ import 'package:oyster/model/FeedSource.dart';
 import 'package:oyster/model/Feeds.dart';
 import 'package:oyster/screens/feeds/feed_list_item.dart';
 import 'package:oyster/screens/feeds/feeds_screen_presenter.dart';
+import 'package:oyster/screens/setting/setting_screen.dart';
 
 class FeedsPage extends StatefulWidget {
   static String tag = 'feeds-page';
@@ -116,6 +117,15 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
     });
   }
 
+  Future<Null> _handlePressSetting() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SettingScreen(),
+      ),
+    );
+  }
+
   Widget _buildProgressIndicator() {
     return new Padding(
       padding: const EdgeInsets.all(8.0),
@@ -136,11 +146,13 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
 
     final drawerChilren = [
           ListTile(
+              leading: Icon(Icons.grain),
               title: Text('All'),
               onTap: () {
                 Navigator.of(context).pop();
               }),
           ListTile(
+              leading: Icon(Icons.star, color: Colors.amber),
               title: Text('Stared'),
               onTap: () {
                 Navigator.of(context).pop();
@@ -154,7 +166,10 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              accountName: Text("test user"),
+              currentAccountPicture: new CircleAvatar(
+                backgroundImage: new AssetImage("assets/logo.png"),
+              ),
+              accountName: Text("Oyster"),
               accountEmail: Text(""),
             ),
             new Expanded(
@@ -168,7 +183,8 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
               ),
             ),
             new Expanded(
-              child: ListTile(title: Text('Setting'), onTap: () {}),
+              child: ListTile(
+                  title: Text('Setting'), onTap: this._handlePressSetting),
             )
           ],
         )),
