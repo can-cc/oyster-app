@@ -22,6 +22,7 @@ class AuthStateProvider {
   void initState() async {
     var db = AppDatabase.get();
     var isLoggedIn = await db.isLoggedIn();
+    print(isLoggedIn);
     if (isLoggedIn) {
       authToken = await db.getAuthToken();
       notify(AuthState.LOGGED_IN);
@@ -57,7 +58,6 @@ class AuthStateProvider {
   }
 
   void logout() async {
-    print("logout func");
     notify(AuthState.LOGGED_OUT);
 
     var db = AppDatabase.get();

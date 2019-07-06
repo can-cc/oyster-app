@@ -27,9 +27,13 @@ class RestDataSource {
         body: {"username": username, "password": password});
   }
 
-  Future<Feeds> getFeeds(int limit, int offset) {
+  Future<Feeds> getFeeds(int limit, int offset, String category) {
+    String categoryQuery = '';
+    if (category != null) {
+      categoryQuery = "&category=${category}";
+    }
     return _netUtil
-        .getByAuth("${SERVER_HOST}/api/feeds/${limit}?offset=${offset}")
+        .getByAuth("${SERVER_HOST}/api/feeds/${limit}?offset=${offset}${categoryQuery}")
         .then((dynamic feeds) {
       return Feeds.fromJson(feeds);
     });

@@ -3,6 +3,7 @@ import 'package:oyster/auth.dart';
 import 'package:oyster/screens/feeds/feeds_screen.dart';
 
 import 'package:oyster/screens/login/login-screen.dart';
+import 'package:oyster/screens/splash/splash_screen.dart';
 
 class MyApp extends StatelessWidget implements AuthStateListener {
   // This widget is the root of your application.
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget implements AuthStateListener {
         primaryColor: const Color(0xFF5D68FF),
         fontFamily: 'Nunito',
       ),
-      home: LoginPage(),
+      home: SplashScreen(),
       routes: routes,
     );
   }

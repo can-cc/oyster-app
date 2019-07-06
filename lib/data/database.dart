@@ -50,6 +50,7 @@ class AppDatabase {
   Future<bool> isLoggedIn() async {
     var db = await _getDb();
     var res = await db.query("User");
+
     return res.length > 0 ? true : false;
   }
 

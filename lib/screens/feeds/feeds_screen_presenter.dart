@@ -11,13 +11,13 @@ class FeedsScreenPresenter {
   RestDataSource api = new RestDataSource();
   FeedsScreenPresenter(this._view);
 
-  Future<Feeds> getHeadFeeds(int limit) async {
-    return await api.getFeeds(limit, 0);
+  Future<Feeds> getHeadFeeds(int limit, String category) async {
+    return await api.getFeeds(limit, 0, category);
   }
 
-  queryMoreFeeds(int limit, int offset) async {
+  queryMoreFeeds(int limit, int offset, String category) async {
     try {
-      final Feeds feeds = await api.getFeeds(limit, offset);
+      final Feeds feeds = await api.getFeeds(limit, offset, category);
       _view.onFeedReceived(feeds);
     } on Exception catch (error) {
       _view.onQueryFeedError(error.toString());
