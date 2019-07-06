@@ -1,4 +1,4 @@
-package com.chenfangwei.oyster;
+package com.fwchen.oyster;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
