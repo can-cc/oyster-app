@@ -19,6 +19,7 @@ class LoginPageState extends State<LoginPage>
   BuildContext _ctx;
   final formKey = new GlobalKey<FormState>();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
+  AuthStateProvider _authStateProvider;
 
   bool _isLoading = false;
 
@@ -28,8 +29,8 @@ class LoginPageState extends State<LoginPage>
 
   LoginPageState() {
     _presenter = new LoginScreenPresenter(this);
-    var authStateProvider = new AuthStateProvider();
-    authStateProvider.subscribe(this);
+    _authStateProvider = new AuthStateProvider();
+    _authStateProvider.subscribe(this);
   }
 
   @override
@@ -148,5 +149,11 @@ class LoginPageState extends State<LoginPage>
   void onLoginSuccess(User user) async {
     _showSnackBar(user.toString());
     setState(() => _isLoading = false);
+  }
+
+  @override
+  void dispose() {
+    _authStateProvider.dispose(this);
+    super.dispose();
   }
 }

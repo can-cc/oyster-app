@@ -5,7 +5,7 @@ import 'package:oyster/screens/login/login-screen.dart';
 import '../../auth.dart';
 
 class SplashScreen extends StatefulWidget {
-  static String tag = 'setting-screen';
+  static String tag = 'splash-screen';
   SplashScreen({Key key, this.title}) : super(key: key);
 
   final String title;
@@ -15,10 +15,11 @@ class SplashScreen extends StatefulWidget {
 }
 
 class SplashScreenState extends State<SplashScreen> implements AuthStateListener {
+  AuthStateProvider _authStateProvider;
 
   SplashScreenState() {
-    var authStateProvider = new AuthStateProvider();
-    authStateProvider.subscribe(this);
+    _authStateProvider = new AuthStateProvider();
+    _authStateProvider.subscribe(this);
   }
 
   @override
@@ -31,18 +32,17 @@ class SplashScreenState extends State<SplashScreen> implements AuthStateListener
   }
 
   @override
+  dispose() {
+    _authStateProvider.dispose(this);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return new Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-          child: new Container(
-              width: 230,
-              decoration: new BoxDecoration(
-                image: new DecorationImage(
-                  image: new AssetImage("assets/logo.png"),
-                  fit: BoxFit.contain,
-                ),
-              ))),
-    );
+          child: new Image.asset("assets/logo.png")
+    ));
   }
 }

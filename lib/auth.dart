@@ -22,14 +22,17 @@ class AuthStateProvider {
   void initState() async {
     var db = AppDatabase.get();
     var isLoggedIn = await db.isLoggedIn();
-    print(isLoggedIn);
-    if (isLoggedIn) {
-      authToken = await db.getAuthToken();
-      notify(AuthState.LOGGED_IN);
-      print("auth get token");
-    } else {
-      print("Login fail");
-      notify(AuthState.LOGGED_OUT);
+    try {
+      if (isLoggedIn) {
+        authToken = await db.getAuthToken();
+        notify(AuthState.LOGGED_IN);
+        print("auth get token");
+      } else {
+        print("Login fail");
+        notify(AuthState.LOGGED_OUT);
+      }
+    } catch (error) {
+      db.clear();
     }
   }
 
@@ -38,9 +41,7 @@ class AuthStateProvider {
   }
 
   void dispose(AuthStateListener listener) {
-    for (var l in _subscribers) {
-      if (l == listener) _subscribers.remove(l);
-    }
+      _subscribers.removeWhere((l) => l == listener);
   }
 
   void notify(AuthState state) {
