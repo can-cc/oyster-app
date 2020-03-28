@@ -5,11 +5,11 @@ import 'package:oyster/data/rest_ds.dart';
 
 void main() {
   RestDataSource api = new RestDataSource();
-  api.setServerEndPoint("https://feed.octopuese.xyz");
+  api.setServerEndPoint("https://feed.hayatarou.com");
 
   var configuredApp = new AppConfig(
     appName: 'Oyster',
-    apiBaseUrl: 'https://feed.octopuese.xyz',
+    apiBaseUrl: 'https://feed.hayatarou.com',
     child: new MyApp(),
   );
 
