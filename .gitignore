@@ -10,4 +10,5 @@ build/
 
 .idea/workspace.xml
 flutter_*.log
+
 .flutter-plugins-dependencies
