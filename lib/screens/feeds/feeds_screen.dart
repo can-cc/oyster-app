@@ -13,14 +13,12 @@ class SelectedCategory {
   final String value;
   final String viewValue;
 
-  const SelectedCategory({
-    this.value,
-    this.viewValue
-  });
+  const SelectedCategory({this.value, this.viewValue});
 }
 
 class FeedsPage extends StatefulWidget {
   static String tag = 'feeds-page';
+
   FeedsPage({Key key, this.title}) : super(key: key);
 
   final String title;
@@ -41,10 +39,8 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
   Repository repository = Repository.get();
 
   var sourceListener;
-  SelectedCategory _selectedCategory = SelectedCategory(
-    value: 'all',
-    viewValue: 'All'
-  );
+  SelectedCategory _selectedCategory =
+      SelectedCategory(value: 'all', viewValue: 'All');
 
   int offset = 0;
   final queryCount = 30;
@@ -160,24 +156,20 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
           selected: _selectedCategory.value == feedSource.id,
           onTap: () {
             _selectedCategory = SelectedCategory(
-              value: feedSource.id,
-              viewValue: feedSource.name
-            );
+                value: feedSource.id, viewValue: feedSource.name);
             _handleRefresh();
             Navigator.of(context).pop();
           });
     }).toList();
 
-    final drawerChilren = [
+    final drawerChildren = [
           ListTile(
               leading: Icon(Icons.grain),
               title: Text('All'),
               selected: _selectedCategory.value == "all",
               onTap: () {
-                _selectedCategory = SelectedCategory(
-                  value: 'all',
-                  viewValue: 'All'
-                );
+                _selectedCategory =
+                    SelectedCategory(value: 'all', viewValue: 'All');
                 _handleRefresh();
                 Navigator.of(context).pop();
               }),
@@ -186,10 +178,8 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
               title: Text('Star'),
               selected: _selectedCategory.value == 'favorite',
               onTap: () {
-                _selectedCategory = SelectedCategory(
-                  value: 'favorite',
-                  viewValue: 'Star'
-                );
+                _selectedCategory =
+                    SelectedCategory(value: 'favorite', viewValue: 'Star');
                 _handleRefresh();
                 Navigator.of(context).pop();
               })
@@ -202,20 +192,19 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              currentAccountPicture: new CircleAvatar(
-                backgroundImage: new AssetImage("assets/logo.png"),
-              ),
-              accountName: Text("Oyster"),
-              accountEmail: Text(""),
-              margin: EdgeInsets.only(bottom: 0.0)
-            ),
+                currentAccountPicture: new CircleAvatar(
+                  backgroundImage: new AssetImage("assets/logo.png"),
+                ),
+                accountName: Text("Oyster"),
+                accountEmail: Text(""),
+                margin: EdgeInsets.only(bottom: 0.0)),
             new Expanded(
               flex: 10,
               child: new Align(
                 alignment: FractionalOffset.center,
                 child: ListView(
                   padding: EdgeInsets.zero,
-                  children: drawerChilren,
+                  children: drawerChildren,
                 ),
               ),
             ),
@@ -228,8 +217,10 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
           ],
         )),
         appBar: AppBar(
+            backgroundColor: Color(0xfffdad28),
             iconTheme: IconThemeData(color: Colors.white),
-            title: Text("${_selectedCategory.viewValue} feeds", style: TextStyle(color: Colors.white))),
+            title: Text("${_selectedCategory.viewValue} feeds",
+                style: TextStyle(color: Colors.white))),
         body: new RefreshIndicator(
             child: ListView.builder(
               itemCount: items.length + 1,

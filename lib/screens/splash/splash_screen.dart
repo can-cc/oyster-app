@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oyster/screens/feeds/feeds_screen.dart';
-import 'package:oyster/screens/login/login-screen.dart';
+import 'package:oyster/screens/login/login_screen.dart';
 
 import '../../auth.dart';
 
@@ -27,7 +27,7 @@ class SplashScreenState extends State<SplashScreen> implements AuthStateListener
     if (state == AuthState.LOGGED_IN) {
       Navigator.of(context).pushReplacementNamed(FeedsPage.tag);
     } else if (state == AuthState.LOGGED_OUT) {
-      Navigator.of(context).pushReplacementNamed(LoginPage.tag);
+      Navigator.of(context).pushReplacementNamed(LoginScreen.tag);
     }
   }
 
@@ -45,4 +45,5 @@ class SplashScreenState extends State<SplashScreen> implements AuthStateListener
           child: new Image.asset("assets/logo.png")
     ));
   }
+
 }

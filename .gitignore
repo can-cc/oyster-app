@@ -12,3 +12,6 @@ build/
 flutter_*.log
 
 .flutter-plugins-dependencies
+
+
+ios/Flutter/flutter_export_environment.sh

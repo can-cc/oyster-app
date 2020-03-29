@@ -1,6 +1,5 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:oyster/screens/login/login-screen.dart';
+import 'package:oyster/screens/login/login_screen.dart';
 
 import '../../auth.dart';
 
@@ -20,7 +19,7 @@ class SettingScreenState extends State<SettingScreen> {
   SettingScreenState() {}
 
   _logout() {
-    Navigator.of(context).pushReplacementNamed(LoginPage.tag);
+    Navigator.of(context).pushReplacementNamed(LoginScreen.tag);
     _authStateProvider.logout();
   }
 

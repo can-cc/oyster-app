@@ -14,6 +14,7 @@ class AuthStateProvider {
   List<AuthStateListener> _subscribers;
 
   factory AuthStateProvider() => _instance;
+
   AuthStateProvider.internal() {
     _subscribers = new List<AuthStateListener>();
     initState();
@@ -21,10 +22,10 @@ class AuthStateProvider {
 
   void initState() async {
     var db = AppDatabase.get();
-    var isLoggedIn = await db.isLoggedIn();
     try {
+      var isLoggedIn = await db.isLoggedIn();
       if (isLoggedIn) {
-        authToken = await db.getAuthToken();
+//        authToken = await db.getAuthToken();
         notify(AuthState.LOGGED_IN);
         print("auth get token");
       } else {
@@ -41,7 +42,7 @@ class AuthStateProvider {
   }
 
   void dispose(AuthStateListener listener) {
-      _subscribers.removeWhere((l) => l == listener);
+    _subscribers.removeWhere((l) => l == listener);
   }
 
   void notify(AuthState state) {
@@ -60,7 +61,6 @@ class AuthStateProvider {
 
   void logout() async {
     notify(AuthState.LOGGED_OUT);
-
     var db = AppDatabase.get();
     await db.clearAuthToken();
     await db.clearUser();

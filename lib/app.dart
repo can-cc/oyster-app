@@ -1,25 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:oyster/auth.dart';
 import 'package:oyster/screens/feeds/feeds_screen.dart';
-
-import 'package:oyster/screens/login/login-screen.dart';
+import 'package:oyster/screens/login/login_screen.dart';
 import 'package:oyster/screens/splash/splash_screen.dart';
 
-class MyApp extends StatelessWidget implements AuthStateListener {
-  // This widget is the root of your application.
+class MyApp extends StatelessWidget {
   BuildContext context;
 
   final routes = <String, WidgetBuilder>{
     FeedsPage.tag: (context) => FeedsPage(),
-    LoginPage.tag: (context) => LoginPage()
+    LoginScreen.tag: (context) => LoginScreen()
   };
-
-  @override
-  onAuthStateChanged(AuthState state) {
-    if (state == AuthState.LOGGED_IN) {
-      Navigator.of(context).pushReplacementNamed(FeedsPage.tag);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

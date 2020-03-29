@@ -5,16 +5,16 @@ import 'package:oyster/auth.dart';
 import 'package:oyster/data/database.dart';
 import 'package:oyster/model/User.dart';
 import 'package:oyster/screens/feeds/feeds_screen.dart';
-import 'package:oyster/screens/login/login-screen-presenter.dart';
+import 'package:oyster/screens/login/login_screen_presenter.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
   static String tag = 'login-page';
 
   @override
-  LoginPageState createState() => new LoginPageState();
+  LoginScreenState createState() => new LoginScreenState();
 }
 
-class LoginPageState extends State<LoginPage>
+class LoginScreenState extends State<LoginScreen>
     implements LoginScreenContract, AuthStateListener {
   BuildContext _ctx;
   final formKey = new GlobalKey<FormState>();
@@ -24,10 +24,11 @@ class LoginPageState extends State<LoginPage>
   bool _isLoading = false;
 
   String _username, _password;
+  int _textClickedTimes = 0;
 
   LoginScreenPresenter _presenter;
 
-  LoginPageState() {
+  LoginScreenState() {
     _presenter = new LoginScreenPresenter(this);
     _authStateProvider = new AuthStateProvider();
     _authStateProvider.subscribe(this);
@@ -57,25 +58,32 @@ class LoginPageState extends State<LoginPage>
   @override
   Widget build(BuildContext context) {
     final topPadding = SizedBox(
-      height: 50,
+      height: 100,
     );
 
-    final logo = Hero(
-      tag: 'hero',
-      child: CircleAvatar(
-        backgroundColor: Colors.transparent,
-        radius: 68.0,
-        child: Image.asset('assets/logo.png'),
-      ),
-    );
+    final helloTxt = new FlatButton(
+        onPressed: () {
+          setState(() => _textClickedTimes++);
+        },
+        child: new Text("Login",
+            textWidthBasis: TextWidthBasis.longestLine,
+            textAlign: TextAlign.left,
+            style: TextStyle(
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+                color: Color(0xfffdad28))));
 
-    final loginBtn = new RaisedButton(
-      onPressed: _submit,
-      child: new Text("LOGIN"),
-      color: Colors.lightBlueAccent,
-    );
+    final loginBtn = SizedBox(
+        width: double.infinity, // match_parent
+        child: new FlatButton(
+          onPressed: _submit,
+          child: new Text("LOGIN"),
+          padding: EdgeInsets.all(12.0),
+          color: Colors.lightBlue,
+          textColor: Colors.white,
+        ));
 
-    final clearDbBtn = new RaisedButton(
+    final clearDbBtn = new FlatButton(
       onPressed: () {
         final db = AppDatabase.get();
         db.clear();
@@ -91,30 +99,44 @@ class LoginPageState extends State<LoginPage>
           child: new Column(
             children: <Widget>[
               new Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(top: 20),
                 child: new TextFormField(
+                  decoration: InputDecoration(
+                    labelText: "Username",
+                    labelStyle: TextStyle(color: Color(0xfffdad28)),
+                    border: OutlineInputBorder(borderSide: BorderSide()),
+                  ),
+                  cursorColor: Color(0xfffdad28),
                   onSaved: (val) => _username = val,
                   validator: (val) {
                     return val.length < 3
                         ? "Username must have atleast 3 chars"
                         : null;
                   },
-                  decoration: new InputDecoration(labelText: "Username"),
                 ),
               ),
               new Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(top: 20, bottom: 30),
                 child: new TextFormField(
-                  obscureText: true,
-                  onSaved: (val) => _password = val,
-                  decoration: new InputDecoration(labelText: "Password"),
-                ),
+                    strutStyle: StrutStyle.fromTextStyle(
+                        TextStyle(color: Color(0xfffdad28))),
+                    cursorColor: Color(0xfffdad28),
+                    obscureText: true,
+                    onSaved: (val) => _password = val,
+                    decoration: new InputDecoration(
+                        labelText: "Password",
+                        labelStyle: TextStyle(color: Color(0xfffdad28)),
+                        border: OutlineInputBorder(borderSide: BorderSide()))),
               ),
             ],
           ),
         ),
-        _isLoading ? new CircularProgressIndicator() : loginBtn,
-        clearDbBtn
+        loginBtn,
+        _textClickedTimes >= 4
+            ? clearDbBtn
+            : new Padding(
+                padding: const EdgeInsets.all(0),
+              )
       ],
       crossAxisAlignment: CrossAxisAlignment.center,
     );
@@ -133,7 +155,7 @@ class LoginPageState extends State<LoginPage>
       body: Center(
         child: ListView(
           padding: EdgeInsets.only(left: 24.0, right: 24.0),
-          children: <Widget>[topPadding, logo, loginForm, forgotLabel],
+          children: <Widget>[topPadding, helloTxt, loginForm, forgotLabel],
         ),
       ),
     );
