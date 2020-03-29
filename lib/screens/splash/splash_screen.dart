@@ -19,11 +19,13 @@ class SplashScreenState extends State<SplashScreen> implements AuthStateListener
 
   SplashScreenState() {
     _authStateProvider = new AuthStateProvider();
+    print("hi1");
     _authStateProvider.subscribe(this);
   }
 
   @override
   onAuthStateChanged(AuthState state) {
+    print(state);
     if (state == AuthState.LOGGED_IN) {
       Navigator.of(context).pushReplacementNamed(FeedsPage.tag);
     } else if (state == AuthState.LOGGED_OUT) {

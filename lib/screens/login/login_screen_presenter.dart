@@ -2,7 +2,7 @@ import 'package:oyster/auth.dart';
 import 'package:oyster/data/database.dart';
 import 'package:oyster/data/rest_ds.dart';
 import 'package:oyster/model/User.dart';
-import 'package:oyster/utils/network_util.dart';
+import 'package:oyster/utils/http_client.dart';
 
 abstract class LoginScreenContract {
   void onLoginSuccess(User user);

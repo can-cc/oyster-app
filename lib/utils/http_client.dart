@@ -14,11 +14,11 @@ class ApiResult {
   }
 }
 
-class NetworkUtil {
+class HttpClient {
   // next three lines makes this class a Singleton
-  static NetworkUtil _instance = new NetworkUtil.internal();
-  NetworkUtil.internal();
-  factory NetworkUtil() => _instance;
+  static HttpClient _instance = new HttpClient.internal();
+  HttpClient.internal();
+  factory HttpClient() => _instance;
 
   final JsonDecoder _decoder = new JsonDecoder();
   final _authStateProvider = new AuthStateProvider();
@@ -79,8 +79,11 @@ class NetworkUtil {
       final String res = response.body;
       final int statusCode = response.statusCode;
 
+      if (statusCode == 401) {
+        // TODO 如果不是登陆请求就不用提示这个，提示重新登陆
+        throw new Exception("username or passowrd incorrectly");
+      }
       if (statusCode < 200 || statusCode > 400 || json == null) {
-        // TODO 明确报错，现在密码错误都是这个
         throw new Exception("Error while fetching data");
       }
       return new ApiResult(

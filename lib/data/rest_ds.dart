@@ -1,16 +1,12 @@
 import 'package:oyster/model/FeedMark.dart';
 import 'package:oyster/model/FeedSource.dart';
 import 'package:oyster/model/Feeds.dart';
-import 'package:oyster/utils/network_util.dart';
-
-//final SERVER_HOST = "http://192.168.50.77:7788";
-
-//var
+import 'package:oyster/utils/http_client.dart';
 
 class RestDataSource {
   String SERVER_HOST;
 
-  NetworkUtil _netUtil = new NetworkUtil();
+  HttpClient _netUtil = new HttpClient();
 
   static RestDataSource _instance = new RestDataSource.internal();
   RestDataSource.internal();

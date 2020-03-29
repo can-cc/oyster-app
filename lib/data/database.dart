@@ -25,20 +25,25 @@ class AppDatabase {
 
   Future _init() async {
     // Get a location using path_provider
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, "app.db");
-    db = await openDatabase(path, version: 1,
-        onCreate: (Database db, int version) async {
-      // When creating the db, create the table
-      print("db version: ${version}.");
-      await db
-          .execute("CREATE TABLE User(id INTEGER PRIMARY KEY, username TEXT)");
+    try {
+      Directory documentsDirectory = await getApplicationDocumentsDirectory();
+      String path = join(documentsDirectory.path, "app.db");
+      db = await openDatabase(path, version: 1,
+          onCreate: (Database db, int version) async {
+            // When creating the db, create the table
+            print("db version: ${version}.");
+            await db
+                .execute("CREATE TABLE IF NOT EXISTS  User(id INTEGER PRIMARY KEY, username TEXT)");
 
-      await db
-          .execute("CREATE TABLE Token(id INTEGER PRIMARY KEY, token TEXT)");
-      print("Created tables");
-    });
-    didInit = true;
+            await db
+                .execute("CREATE TABLE IF NOT EXISTS  Token(id INTEGER PRIMARY KEY, token TEXT)");
+            print("Created tables");
+          });
+      didInit = true;
+    } catch(error) {
+      print(error);
+      throw error;
+    }
   }
 
   Future clear() async {
