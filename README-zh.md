@@ -23,3 +23,9 @@ flutter_icons:
 
 ```
 
+
+## 发布
+(https://flutter.dev/docs/deployment/ios)[https://flutter.dev/docs/deployment/ios]
+### iOS
+
+运行 `flutter build ios --release` 可以打包，也可以在 xcode 上直接安装，在 xcode 上直接安装的时候需要在左上角的选项上选择正确的 schema 为 Release
