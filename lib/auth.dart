@@ -6,7 +6,7 @@ abstract class AuthStateListener {
   void onAuthStateChanged(AuthState state);
 }
 
-// A naive implementation of Observer/Subscriber Pattern. Will do for now.
+// A native implementation of Observer/Subscriber Pattern.
 class AuthStateProvider {
   static final AuthStateProvider _instance = new AuthStateProvider.internal();
   String authToken;
