@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:oyster/common/constant.dart';
 import 'package:oyster/data/repository.dart';
 import 'package:oyster/model/Feed.dart';
 import 'package:oyster/model/FeedSource.dart';
@@ -166,20 +167,20 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
           ListTile(
               leading: Icon(Icons.grain),
               title: Text('All'),
-              selected: _selectedCategory.value == "all",
+              selected: _selectedCategory.value == "_all",
               onTap: () {
                 _selectedCategory =
-                    SelectedCategory(value: 'all', viewValue: 'All');
+                    SelectedCategory(value: '_all', viewValue: 'All');
                 _handleRefresh();
                 Navigator.of(context).pop();
               }),
           ListTile(
               leading: Icon(Icons.star, color: Colors.amber),
               title: Text('Star'),
-              selected: _selectedCategory.value == 'favorite',
+              selected: _selectedCategory.value == '_favorite',
               onTap: () {
                 _selectedCategory =
-                    SelectedCategory(value: 'favorite', viewValue: 'Star');
+                    SelectedCategory(value: '_favorite', viewValue: 'Star');
                 _handleRefresh();
                 Navigator.of(context).pop();
               })
@@ -192,10 +193,13 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             UserAccountsDrawerHeader(
+                decoration: BoxDecoration(
+                  color: PrimaryColor,
+                ),
                 currentAccountPicture: new CircleAvatar(
                   backgroundImage: new AssetImage("assets/logo.png"),
                 ),
-                accountName: Text("Oyster"),
+                accountName: Text(""),
                 accountEmail: Text(""),
                 margin: EdgeInsets.only(bottom: 0.0)),
             new Expanded(

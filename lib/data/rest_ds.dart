@@ -19,7 +19,7 @@ class RestDataSource {
   }
 
   Future<ApiResult> login(String username, String password) {
-    return _netUtil.postByAuth(SERVER_HOST + "/api/login",
+    return _netUtil.postByAuth(SERVER_HOST + "/login",
         body: {"username": username, "password": password});
   }
 
@@ -29,7 +29,7 @@ class RestDataSource {
       categoryQuery = "&category=${category}";
     }
     return _netUtil
-        .getByAuth("${SERVER_HOST}/api/feeds/${limit}?offset=${offset}${categoryQuery}")
+        .getByAuth("${SERVER_HOST}/feeds/${limit}?offset=${offset}${categoryQuery}")
         .then((dynamic feeds) {
       return Feeds.fromJson(feeds);
     });
@@ -37,18 +37,18 @@ class RestDataSource {
 
   Future<FeedMark> markFeedFavorite(String feedId) async {
     final ApiResult result = await _netUtil
-        .postByAuth("${SERVER_HOST}/api/feed/${feedId}/favorite", body: {});
+        .postByAuth("${SERVER_HOST}/feed/${feedId}/favorite", body: {});
     return FeedMark.map(result.body);
   }
 
   Future<void> removeFeedFavoriteMark(String feedId, String markId) async {
     await _netUtil
-        .deleteByAuth("${SERVER_HOST}/api/feed/${feedId}/favorite/${markId}");
+        .deleteByAuth("${SERVER_HOST}/feed/${feedId}/favorite/${markId}");
   }
 
   Future<List<FeedSource>> getFeedSources() {
     return _netUtil
-        .getByAuth("${SERVER_HOST}/api/feed-sources")
+        .getByAuth("${SERVER_HOST}/feed-sources")
         .then((dynamic feedSources) {
       return feedSources
           .map<FeedSource>((source) => FeedSource.map(source))

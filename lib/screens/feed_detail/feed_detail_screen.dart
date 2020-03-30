@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:oyster/common/constant.dart';
 import 'package:oyster/model/Feed.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -45,7 +46,7 @@ class FeedDetailPageState extends State<FeedDetailPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: AppBar(elevation: 2, actions: <Widget>[
+        appBar: AppBar(elevation: 2, backgroundColor: PrimaryColor, actions: <Widget>[
           // action button
           IconButton(
             icon: Icon(Icons.explore, color: Colors.white, size: 27),
@@ -56,7 +57,7 @@ class FeedDetailPageState extends State<FeedDetailPage> {
           // action button
           IconButton(
             icon: new Icon(isFavorite ? Icons.star : Icons.star_border,
-                size: 29, color: Colors.amber),
+                size: 29, color: Colors.white),
             onPressed: () {
               _handleIconTap();
             },

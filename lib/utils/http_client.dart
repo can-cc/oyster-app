@@ -61,6 +61,7 @@ class HttpClient {
 
       if (statusCode == 401) {
         _authStateProvider.logout();
+        throw new Exception("Session timeout");
       }
 
       if (statusCode < 200 || statusCode > 400 || json == null) {
