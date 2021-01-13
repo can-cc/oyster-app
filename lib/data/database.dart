@@ -33,14 +33,21 @@ class AppDatabase {
             // When creating the db, create the table
             print("db version: ${version}.");
             await db
-                .execute("CREATE TABLE IF NOT EXISTS  User(id INTEGER PRIMARY KEY, username TEXT)");
+                .execute("CREATE TABLE IF NOT EXISTS User(id INTEGER PRIMARY KEY, username TEXT)");
 
             await db
-                .execute("CREATE TABLE IF NOT EXISTS  Token(id INTEGER PRIMARY KEY, token TEXT)");
+                .execute("CREATE TABLE IF NOT EXISTS Token(id INTEGER PRIMARY KEY, token TEXT)");
+
+            await db
+                .execute("CREATE TABLE IF NOT EXISTS Feed(id VARCHAR(36) PRIMARY KEY, title VARCHAR(200), content TEXT, createdAt VARCHAR(20), originCreatedAt VARCHAR(20), source VARCHAR(36))");
+
+            await db
+                .execute("CREATE TABLE IF NOT EXISTS FeedMarks(id VARCHAR(36) PRIMARY KEY, title VARCHAR(200), content TEXT, createdAt VARCHAR(20), originCreatedAt VARCHAR(20), source VARCHAR(36))");
             print("Created tables");
           });
       didInit = true;
     } catch(error) {
+      print("读取数据库失败.");
       print(error);
       throw error;
     }
@@ -49,6 +56,7 @@ class AppDatabase {
   Future clear() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "app.db");
+    print("delete database");
     await deleteDatabase(path);
   }
 
@@ -63,6 +71,7 @@ class AppDatabase {
     print("save user ${user.toMap()}");
     var db = await _getDb();
     int res = await db.insert("User", user.toMap());
+    print("save success");
     return res;
   }
 

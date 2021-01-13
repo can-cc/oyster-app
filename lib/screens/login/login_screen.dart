@@ -32,6 +32,7 @@ class LoginScreenState extends State<LoginScreen>
     _presenter = new LoginScreenPresenter(this);
     _authStateProvider = new AuthStateProvider();
     _authStateProvider.subscribe(this);
+    print("login screen");
   }
 
   @override
@@ -66,7 +67,6 @@ class LoginScreenState extends State<LoginScreen>
           setState(() => _textClickedTimes++);
         },
         child: new Text("Login",
-            textWidthBasis: TextWidthBasis.longestLine,
             textAlign: TextAlign.left,
             style: TextStyle(
                 fontSize: 40,

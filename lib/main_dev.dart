@@ -5,7 +5,7 @@ import 'package:oyster/data/rest_ds.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   RestDataSource api = new RestDataSource();
-  api.setServerEndPoint("https://feed.hayatarou.com/api");
+  api.setServerEndPoint("http://192.168.50.134:9888/api");
 
   runApp(new MyApp());
 }

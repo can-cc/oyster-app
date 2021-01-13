@@ -19,11 +19,13 @@ class LoginScreenPresenter {
       final ApiResult result = await api.login(username, password);
       final User user = new User.map(result.body);
       var db = AppDatabase.get();
+      var token = result.header["authorization"];
       await db.saveUser(user);
+      await db.saveAuthToken(token);
 
       var authStateProvider = new AuthStateProvider();
       authStateProvider.notify(AuthState.LOGGED_IN);
-      authStateProvider.setAuthToken(result.header["authorization"]);
+      authStateProvider.setAuthToken(token);
     } on Exception catch (error) {
       _view.onLoginError(error.toString());
     }

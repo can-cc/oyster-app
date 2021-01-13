@@ -22,10 +22,12 @@ class AuthStateProvider {
 
   void initState() async {
     var db = AppDatabase.get();
+    print("initState");
     try {
       var isLoggedIn = await db.isLoggedIn();
       if (isLoggedIn) {
-//        authToken = await db.getAuthToken();
+        authToken = await db.getAuthToken();
+        setAuthToken(authToken);
         notify(AuthState.LOGGED_IN);
         print("auth get token");
       } else {
@@ -49,10 +51,8 @@ class AuthStateProvider {
     _subscribers.forEach((AuthStateListener s) => s.onAuthStateChanged(state));
   }
 
-  void setAuthToken(String token) async {
-    var db = AppDatabase.get();
+  void setAuthToken(String token) {
     authToken = token;
-    await db.saveAuthToken(token);
   }
 
   String getAuthToken() {

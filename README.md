@@ -23,3 +23,6 @@ flutter_icons:
 
 ```
 
+## How to debug
+
+https://stackoverflow.com/questions/49067382/flutter-app-not-using-fiddler-proxy
