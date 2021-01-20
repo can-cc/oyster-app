@@ -13,5 +13,6 @@ flutter_*.log
 
 .flutter-plugins-dependencies
 
+local.properties
 
 ios/Flutter/flutter_export_environment.sh
