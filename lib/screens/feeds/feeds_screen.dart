@@ -19,9 +19,7 @@ class SelectedCategory {
 
 class FeedsPage extends StatefulWidget {
   static String tag = 'feeds-page';
-
   FeedsPage({Key key, this.title}) : super(key: key);
-
   final String title;
 
   @override
@@ -30,10 +28,9 @@ class FeedsPage extends StatefulWidget {
 
 class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
   FeedsScreenPresenter _presenter;
-
   List<Feed> items = List();
   List<FeedSource> _sources = List();
-
+  final scaffoldKey = new GlobalKey<ScaffoldState>();
   ScrollController _scrollController = new ScrollController();
   bool isPerformingRequest = false;
 
@@ -41,7 +38,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
 
   var sourceListener;
   SelectedCategory _selectedCategory =
-      SelectedCategory(value: 'all', viewValue: 'All');
+      SelectedCategory(value: '_all', viewValue: 'All');
 
   int offset = 0;
   final queryCount = 30;
@@ -63,7 +60,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
       });
     });
 
-    _getMoreData();
+    _handleRefresh();
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
@@ -81,21 +78,10 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
   }
 
   @override
-  void onFeedReceived(Feeds newFeeds) {
-    if (newFeeds.items.isEmpty) {
-      double edge = 50.0;
-      double offsetFromBottom = _scrollController.position.maxScrollExtent -
-          _scrollController.position.pixels;
-      if (offsetFromBottom < edge) {
-        _scrollController.animateTo(
-            _scrollController.offset - (edge - offsetFromBottom),
-            duration: new Duration(milliseconds: 500),
-            curve: Curves.easeOut);
-      }
-    }
+  void onFeedReceived(List<Feed> newFeeds) {
     offset += queryCount;
     setState(() {
-      items.addAll(newFeeds.items);
+      items.addAll(newFeeds);
       isPerformingRequest = false;
     });
   }
@@ -108,24 +94,61 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
   }
 
   _getMoreData() {
+    print('_getMoreData');
     if (!isPerformingRequest) {
       setState(() => isPerformingRequest = true);
-      _presenter.queryMoreFeeds(queryCount, offset, _selectedCategory.value);
+      _presenter.queryMoreFeeds(queryCount, offset, _selectedCategory.value, items.length > 0 ? items.last.id : 0);
     }
   }
 
   void _handleBack(Feed feed) {}
 
+  // Future<Null> _handleInitFetch() async {
+  //   await _presenter.getHeadFeeds(30, _selectedCategory.value);
+  // }
+
+  Future<Null> _handleRealRefresh2() async {
+    setState(() {
+      items.clear();
+    });
+    try {
+      final Feeds feeds =
+      await _presenter.queryLatestFeeds(_selectedCategory.value, items.first.id);
+      setState(() {
+        if (feeds.items.length > 0) {
+          feeds.items.addAll(items);
+          // items.addAll(feeds.items);
+          // offset = queryCount;
+        }
+      });
+    } catch(e) {
+      print(e);
+      _showSnackBar(e.toString());
+    }
+  }
+
   Future<Null> _handleRefresh() async {
     setState(() {
       items.clear();
     });
-    final Feeds feeds =
-        await _presenter.getHeadFeeds(queryCount, _selectedCategory.value);
-    setState(() {
-      items.addAll(feeds.items);
-      offset = queryCount;
-    });
+    try {
+      final List<Feed> feeds =
+      await _presenter.getHeadFeeds(queryCount, _selectedCategory.value);
+      print('hi _handleRefresh');
+      setState(() {
+        print('set state');
+        items.addAll(feeds);
+        offset = feeds.length;
+      });
+    } catch(e) {
+      print(e);
+      _showSnackBar(e.toString());
+    }
+  }
+
+  void _showSnackBar(String text) {
+    scaffoldKey.currentState
+        .showSnackBar(new SnackBar(content: new Text(text)));
   }
 
   Future<Null> _handlePressSetting() async {
@@ -188,6 +211,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
         drawerSourcesList;
 
     return new Scaffold(
+        key: scaffoldKey,
         drawer: Drawer(
             child: new Column(
           mainAxisSize: MainAxisSize.max,
@@ -242,6 +266,6 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
               },
               controller: _scrollController,
             ),
-            onRefresh: _handleRefresh));
+            onRefresh: _handleRealRefresh2));
   }
 }

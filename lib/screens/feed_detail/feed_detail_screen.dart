@@ -1,3 +1,6 @@
+import 'dart:ffi';
+import 'package:intl/intl.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:oyster/common/constant.dart';
@@ -73,7 +76,7 @@ class FeedDetailPageState extends State<FeedDetailPage> {
               SizedBox(
                 height: 10,
               ),
-              Text(widget.feed.createdAt,
+              Text(new DateFormat('yyyy-MM-dd  HH:mm:ss').format(widget.feed.createdAt),
                   style:
                       TextStyle(fontWeight: FontWeight.normal, fontSize: 12)),
               SizedBox(

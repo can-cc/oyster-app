@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:oyster/model/FeedMark.dart';
 import 'package:oyster/model/FeedSource.dart';
 import 'package:oyster/model/Feeds.dart';
@@ -23,25 +25,30 @@ class RestDataSource {
         body: {"username": username, "password": password});
   }
 
-  Future<Feeds> getFeeds(int limit, int offset, String category) {
+  Future<Feeds> getFeeds(int limit, int offset, String category, int fromId, bool isFromOrderAsc) {
     String categoryQuery = '';
     if (category != null) {
-      categoryQuery = "&category=${category}";
+      categoryQuery = "&category=$category";
     }
+    String fromQuery = '';
+    if (fromId != null) {
+      fromQuery = "&from=$fromId";
+    }
+    String fromOrder = isFromOrderAsc ? '&order=asc' : '&order=desc';
     return _netUtil
-        .getByAuth("${SERVER_HOST}/feeds/${limit}?offset=${offset}${categoryQuery}")
+        .getByAuth("$SERVER_HOST/feeds/$limit?offset=$offset$categoryQuery$fromQuery$fromOrder")
         .then((dynamic feeds) {
       return Feeds.fromJson(feeds);
     });
   }
 
-  Future<FeedMark> markFeedFavorite(String feedId) async {
+  Future<FeedMark> markFeedFavorite(int feedId) async {
     final ApiResult result = await _netUtil
         .postByAuth("${SERVER_HOST}/feed/${feedId}/favorite", body: {});
     return FeedMark.map(result.body);
   }
 
-  Future<void> removeFeedFavoriteMark(String feedId) async {
+  Future<void> removeFeedFavoriteMark(int feedId) async {
     await _netUtil
         .postByAuth("${SERVER_HOST}/feed/${feedId}/unfavorite");
   }

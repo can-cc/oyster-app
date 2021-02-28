@@ -40,7 +40,7 @@ class AppDatabase {
                 .execute("CREATE TABLE IF NOT EXISTS Token(id INTEGER PRIMARY KEY, token TEXT)");
 
             await db
-                .execute("CREATE TABLE IF NOT EXISTS Feed(id VARCHAR(36) PRIMARY KEY, title VARCHAR(200), content TEXT, createdAt VARCHAR(20), originCreatedAt VARCHAR(20), source VARCHAR(36), isFavorite INT)");
+                .execute("CREATE TABLE IF NOT EXISTS Feed(id INT(24) PRIMARY KEY, title VARCHAR(200), content TEXT, originHref TEXT, createdAt VARCHAR(20), originCreatedAt VARCHAR(20), source VARCHAR(36), isFavorite INT)");
 
             print("Created tables");
           });
@@ -69,14 +69,16 @@ class AppDatabase {
   Future saveFeeds(List<Feed> feeds) async {
     var db = await _getDb();
     for (Feed feed in feeds) {
-      await db.insert("Feed", feed.toMap());
+      await db.insert("Feed", feed.toMap(), conflictAlgorithm: ConflictAlgorithm.ignore );
     }
   }
 
-  Future<List<Feed>> getFeeds(String source, int offset, int limit) async {
+  Future<List<Feed>> getFeeds(String source, int offset, int limit, int id) async {
     var db = await _getDb();
-    List<Map> maps = await db.query("Feed", where: '$source = ?', whereArgs: [source], limit: limit, offset: offset);
-    return maps.map((e) => Feed.map(e));
+    List<Map> maps = await db.query("Feed", where: 'source = ? AND id > ?', whereArgs: [source, id], limit: limit, offset: offset, orderBy: "createdAt DESC");
+    // List<Map> maps = await db.query("Feed");
+    print(maps.length);
+    return maps.map((e) => Feed.map(e)).toList();
   }
 
   Future<int> saveUser(User user) async {
