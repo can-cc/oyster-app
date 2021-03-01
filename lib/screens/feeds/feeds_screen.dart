@@ -108,15 +108,17 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
   // }
 
   Future<Null> _handleRealRefresh2() async {
-    setState(() {
-      items.clear();
-    });
+    // setState(() {
+    //   items.clear();
+    // });
     try {
       final Feeds feeds =
-      await _presenter.queryLatestFeeds(_selectedCategory.value, items.first.id);
+      await _presenter.queryLatestFeeds(_selectedCategory.value, items.length > 0 ? items.first.id : null);
       setState(() {
         if (feeds.items.length > 0) {
-          feeds.items.addAll(items);
+          final List<Feed> newItems = new List.from(feeds.items.reversed);
+          newItems.addAll(items);
+          items = newItems;
           // items.addAll(feeds.items);
           // offset = queryCount;
         }
