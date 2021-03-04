@@ -136,9 +136,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
     try {
       final List<Feed> feeds =
       await _presenter.getHeadFeeds(queryCount, _selectedCategory.value);
-      print('hi _handleRefresh');
       setState(() {
-        print('set state');
         items.addAll(feeds);
         offset = feeds.length;
       });
@@ -253,18 +251,18 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
                 style: TextStyle(color: Colors.white))),
         body: new RefreshIndicator(
             child: ListView.builder(
-              itemCount: items.length + 1,
+              itemCount: items.length,
               itemBuilder: (context, index) {
-                if (index.isOdd) {
-                  return Divider(
-                    height: 8,
-                  );
-                }
-                if (index == items.length) {
-                  return _buildProgressIndicator();
-                } else {
-                  return FeedListItem(feed: items[index], onBack: _handleBack);
-                }
+                // if (index.isOdd) {
+                //   return Divider(
+                //     height: 8,
+                //   );
+                // }
+                return FeedListItem(feed: items[index], onBack: _handleBack);
+                // if (index == items.length) { // TODO
+                //   return _buildProgressIndicator();
+                // } else {
+                // }
               },
               controller: _scrollController,
             ),

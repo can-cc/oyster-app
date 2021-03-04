@@ -23,7 +23,7 @@ class FeedsScreenPresenter {
 
   queryMoreFeeds(int limit, int offset, String category, int fromId) async {
     try {
-      List<Feed> feeds = await queryFeeds(limit, offset, category, fromId);
+      List<Feed> feeds = await queryFeeds(limit, 0, category, fromId);
       _view.onFeedReceived(feeds);
     } on Exception catch (error) {
       _view.onQueryFeedError(error.toString());
