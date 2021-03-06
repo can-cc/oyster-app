@@ -68,6 +68,8 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
         _getMoreData();
       }
     });
+
+    // _handleRealRefresh2();
   }
 
   @override
@@ -107,10 +109,12 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
   //   await _presenter.getHeadFeeds(30, _selectedCategory.value);
   // }
 
+  // 下拉刷新
   Future<Null> _handleRealRefresh2() async {
     // setState(() {
     //   items.clear();
     // });
+    print("_handleRealRefresh2");
     try {
       final Feeds feeds =
       await _presenter.queryLatestFeeds(_selectedCategory.value, items.length > 0 ? items.first.id : null);
@@ -125,6 +129,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
       });
     } catch(e) {
       print(e);
+      // print(e._stackTrace);
       _showSnackBar(e.toString());
     }
   }
@@ -133,6 +138,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
     setState(() {
       items.clear();
     });
+    print('hihihihihihi');
     try {
       final List<Feed> feeds =
       await _presenter.getHeadFeeds(queryCount, _selectedCategory.value);
@@ -140,8 +146,10 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
         items.addAll(feeds);
         offset = feeds.length;
       });
+      _handleRealRefresh2(); // 刷新最新数据
     } catch(e) {
       print(e);
+      // print(e._stackTrace);
       _showSnackBar(e.toString());
     }
   }
@@ -251,14 +259,17 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
                 style: TextStyle(color: Colors.white))),
         body: new RefreshIndicator(
             child: ListView.builder(
-              itemCount: items.length,
+              itemCount: items.length * 2,
               itemBuilder: (context, index) {
-                // if (index.isOdd) {
-                //   return Divider(
-                //     height: 8,
-                //   );
-                // }
-                return FeedListItem(feed: items[index], onBack: _handleBack);
+                if (items.length == 0) {
+                    return _buildProgressIndicator();
+                }
+                if (index.isOdd) {
+                  return Divider(
+                    height: 8,
+                  );
+                }
+                return FeedListItem(feed: items[index ~/ 2], onBack: _handleBack);
                 // if (index == items.length) { // TODO
                 //   return _buildProgressIndicator();
                 // } else {

@@ -6,6 +6,7 @@ import 'package:oyster/model/User.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'dart:convert';
 
 class AppDatabase {
   static final AppDatabase _bookDatabase = new AppDatabase._internal();
@@ -28,7 +29,7 @@ class AppDatabase {
     // Get a location using path_provider
     try {
       Directory documentsDirectory = await getApplicationDocumentsDirectory();
-      String path = join(documentsDirectory.path, "app.db");
+      String path = join(documentsDirectory.path, "app.sqlite3");
       db = await openDatabase(path, version: 1,
           onCreate: (Database db, int version) async {
             // When creating the db, create the table
@@ -40,7 +41,7 @@ class AppDatabase {
                 .execute("CREATE TABLE IF NOT EXISTS Token(id INTEGER PRIMARY KEY, token TEXT)");
 
             await db
-                .execute("CREATE TABLE IF NOT EXISTS Feed(id INT(24) PRIMARY KEY, title VARCHAR(200), content TEXT, originHref TEXT, createdAt VARCHAR(20), originCreatedAt VARCHAR(20), source VARCHAR(36), isFavorite INT)");
+                .execute("CREATE TABLE IF NOT EXISTS Feed(id INT(24) PRIMARY KEY, title VARCHAR(200), content TEXT, originHref TEXT, createdAt VARCHAR(20), originCreatedAt VARCHAR(20), source TEXT,  source_id VARCHAR(16), isFavorite INT)");
 
             print("Created tables");
           });
@@ -54,7 +55,7 @@ class AppDatabase {
 
   Future clear() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentsDirectory.path, "app.db");
+    String path = join(documentsDirectory.path, "app.sqlite3");
     print("delete database");
     await deleteDatabase(path);
   }
@@ -75,10 +76,15 @@ class AppDatabase {
 
   Future<List<Feed>> getFeeds(String source, int offset, int limit, int id) async {
     var db = await _getDb();
-    List<Map> maps = await db.query("Feed", where: 'source = ? AND id > ?', whereArgs: [source, id], limit: limit, offset: offset, orderBy: "createdAt DESC");
+    print("从ID$id开始往下拿");
+    var compareFu = id == 0 ? ">" : "<";
+    List<Map> maps = await db.query("Feed", where: 'source_id = ? AND id $compareFu ?', whereArgs: [source, id], limit: limit, offset: offset, orderBy: "id DESC");
     // List<Map> maps = await db.query("Feed");
-    print(maps.length);
-    return maps.map((e) => Feed.map(e)).toList();
+    print("从数据库拿到的feed长度=" + maps.length.toString());
+    return maps.map((e) {
+      Map<String, dynamic>  moreMoons = new Map<String,dynamic>.from(e)..addAll({'source' : json.decode(e["source"]) });
+      return Feed.map(moreMoons);
+    }).toList();
   }
 
   Future<int> saveUser(User user) async {

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:oyster/data/rest_ds.dart';
 import 'package:oyster/model/FeedMark.dart';
 import 'package:oyster/model/FeedSource.dart';
+import 'dart:convert';
 
 class Feed {
   int _id;
@@ -28,9 +29,10 @@ class Feed {
     // var formatter = new DateFormat('yyyy-MM-dd  HH:mm:ss');
     // String formattedCreatedAt = formatter.format(createdAt);
     this._createdAt = createdAt;
-    print(obj["marks"]);
-    this._isFavorite = obj["marks"] != null;
-    this._source = FeedSource.map({"id": obj["source"], "name": "mock"});
+    this._isFavorite = obj["isFavorite"] != false && obj["isFavorite"] != null && obj["isFavorite"] != 0;
+    // this._isFavorite = false;
+    this._source = FeedSource.map(obj["source"]);
+    // this._source = FeedSource.map({"id": obj["source"], "name": "mock"});
   }
 
   set id(id) => _id = id;
@@ -49,7 +51,8 @@ class Feed {
     map["originHref"] = _originHref;
     map["content"] = _content;
     map["createdAt"] = _originCreatedAt;
-    map["source"] = _source.id;
+    map["source"] = json.encode(_source.toMap());
+    map["source_id"] = _source.id; // TODO 这个逻辑不应该放在这里做
     map["isFavorite"] = _isFavorite;
     return map;
   }

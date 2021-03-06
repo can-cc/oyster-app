@@ -45,7 +45,7 @@ class FeedsScreenPresenter {
 
   Future<List<Feed>> queryFeedsInDB(int limit, int offset, String category, int fromId) async {
     final db = AppDatabase.get();
-    List<Feed> feeds = await db.getFeeds(category, offset, limit, 0);
+    List<Feed> feeds = await db.getFeeds(category, offset, limit, fromId);
     return feeds;
   }
 

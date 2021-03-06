@@ -1,4 +1,4 @@
-package com.example.oyster
+package com.chenfangwei.oyster
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -38,7 +38,11 @@ class RestDataSource {
     return _netUtil
         .getByAuth("$SERVER_HOST/feeds/$limit?offset=$offset$categoryQuery$fromQuery$fromOrder")
         .then((dynamic feeds) {
-      return Feeds.fromJson(feeds);
+      return Feeds.fromJson(feeds.map((f) {
+        var isFavorite = (f["marks"] as List).length != 0;
+        Map<String, dynamic>  moreMoons = new Map<String,dynamic>.from(f)..addAll({'isFavorite' : isFavorite });
+        return moreMoons;
+      }).toList());
     });
   }
 
