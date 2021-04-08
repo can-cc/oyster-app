@@ -32,7 +32,6 @@ class LoginScreenState extends State<LoginScreen>
     _presenter = new LoginScreenPresenter(this);
     _authStateProvider = new AuthStateProvider();
     _authStateProvider.subscribe(this);
-    print("login screen");
   }
 
   @override

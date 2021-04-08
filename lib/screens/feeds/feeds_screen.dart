@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:oyster/auth.dart';
 import 'package:oyster/common/constant.dart';
 import 'package:oyster/data/repository.dart';
 import 'package:oyster/model/Feed.dart';
@@ -8,6 +9,7 @@ import 'package:oyster/model/FeedSource.dart';
 import 'package:oyster/model/Feeds.dart';
 import 'package:oyster/screens/feeds/feed_list_item.dart';
 import 'package:oyster/screens/feeds/feeds_screen_presenter.dart';
+import 'package:oyster/screens/login/login_screen.dart';
 import 'package:oyster/screens/setting/setting_screen.dart';
 
 class SelectedCategory {
@@ -26,13 +28,14 @@ class FeedsPage extends StatefulWidget {
   FeedsPageState createState() => new FeedsPageState();
 }
 
-class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
+class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract, AuthStateListener {
   FeedsScreenPresenter _presenter;
   List<Feed> items = List();
   List<FeedSource> _sources = List();
   final scaffoldKey = new GlobalKey<ScaffoldState>();
   ScrollController _scrollController = new ScrollController();
   bool isPerformingRequest = false;
+  AuthStateProvider _authStateProvider;
 
   Repository repository = Repository.get();
 
@@ -45,6 +48,8 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
 
   FeedsPageState() {
     _presenter = new FeedsScreenPresenter(this);
+    _authStateProvider = new AuthStateProvider();
+    _authStateProvider.subscribe(this);
   }
 
   @override
@@ -70,6 +75,13 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract {
     });
 
     // _handleRealRefresh2();
+  }
+
+  @override
+  onAuthStateChanged(AuthState state) {
+    if (state == AuthState.LOGGED_OUT) {
+      Navigator.of(context).pushReplacementNamed(LoginScreen.tag);
+    }
   }
 
   @override
