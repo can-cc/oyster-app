@@ -37,6 +37,7 @@ class FeedsScreenPresenter {
       return dbFeeds;
     } else {
       final Feeds feeds = await api.getFeeds(limit, offset, category, fromId, false);
+      print("从网络拿到的feed长度" + feeds.items.length.toString());
       final db = AppDatabase.get();
       db.saveFeeds(feeds.items);
       return feeds.items;

@@ -6,6 +6,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   RestDataSource api = new RestDataSource();
   // api.setServerEndPoint("http://192.168.50.8:7788/api");
+  api.setServerEndPoint("https://oyster.chencanhao.com/api");
 
   runApp(new MyApp());
 }

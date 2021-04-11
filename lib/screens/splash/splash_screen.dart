@@ -44,7 +44,7 @@ class SplashScreenState extends State<SplashScreen> implements AuthStateListener
     return new Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-          child: new Image.asset("assets/logo.png")
+          child: new Image.asset("assets/icon.png")
     ));
   }
 

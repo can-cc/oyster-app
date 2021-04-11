@@ -32,21 +32,21 @@ class AppDatabase {
       String path = join(documentsDirectory.path, "app.sqlite3");
       db = await openDatabase(path, version: 1,
           onCreate: (Database db, int version) async {
-            // When creating the db, create the table
-            print("db version: ${version}.");
-            await db
-                .execute("CREATE TABLE IF NOT EXISTS User(id INTEGER PRIMARY KEY, username TEXT)");
+        // When creating the db, create the table
+        print("db version: ${version}.");
+        await db.execute(
+            "CREATE TABLE IF NOT EXISTS User(id INTEGER PRIMARY KEY, username TEXT)");
 
-            await db
-                .execute("CREATE TABLE IF NOT EXISTS Token(id INTEGER PRIMARY KEY, token TEXT)");
+        await db.execute(
+            "CREATE TABLE IF NOT EXISTS Token(id INTEGER PRIMARY KEY, token TEXT)");
 
-            await db
-                .execute("CREATE TABLE IF NOT EXISTS Feed(id INT(24) PRIMARY KEY, title VARCHAR(200), content TEXT, originHref TEXT, createdAt VARCHAR(20), originCreatedAt VARCHAR(20), source TEXT,  source_id VARCHAR(16), isFavorite INT)");
+        await db.execute(
+            "CREATE TABLE IF NOT EXISTS Feed(id INT(24) PRIMARY KEY, title VARCHAR(200), content TEXT, originHref TEXT, createdAt VARCHAR(20), originCreatedAt VARCHAR(20), source TEXT,  source_id VARCHAR(16), isFavorite INT)");
 
-            print("Created tables");
-          });
+        print("Created tables");
+      });
       didInit = true;
-    } catch(error) {
+    } catch (error) {
       print("读取数据库失败.");
       print(error);
       throw error;
@@ -70,19 +70,35 @@ class AppDatabase {
   Future saveFeeds(List<Feed> feeds) async {
     var db = await _getDb();
     for (Feed feed in feeds) {
-      await db.insert("Feed", feed.toMap(), conflictAlgorithm: ConflictAlgorithm.ignore );
+      await db.insert("Feed", feed.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.ignore);
     }
   }
 
-  Future<List<Feed>> getFeeds(String source, int offset, int limit, int id) async {
+  Future<List<Feed>> getFeeds(
+      String source, int offset, int limit, int id) async {
     var db = await _getDb();
+    print("拿source=$source");
     print("从ID$id开始往下拿");
     var compareFu = id == 0 ? ">" : "<";
-    List<Map> maps = await db.query("Feed", where: 'source_id = ? AND id $compareFu ?', whereArgs: [source, id], limit: limit, offset: offset, orderBy: "id DESC");
-    // List<Map> maps = await db.query("Feed");
+
+    List<Map> maps;
+    if (source == '_all') {
+      maps = await db.query("Feed", where: 'id $compareFu ?', whereArgs: [id], limit: limit, offset: offset, orderBy: "id DESC");
+
+    } else {
+      maps = await db.query("Feed",
+          where: 'source_id = ? AND id $compareFu ?',
+          whereArgs: [source, id],
+          limit: limit,
+          offset: offset,
+          orderBy: "id DESC");
+      // List<Map> maps = await db.query("Feed");
+    }
     print("从数据库拿到的feed长度=" + maps.length.toString());
     return maps.map((e) {
-      Map<String, dynamic>  moreMoons = new Map<String,dynamic>.from(e)..addAll({'source' : json.decode(e["source"]) });
+      Map<String, dynamic> moreMoons = new Map<String, dynamic>.from(e)
+        ..addAll({'source': json.decode(e["source"])});
       return Feed.map(moreMoons);
     }).toList();
   }

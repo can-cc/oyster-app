@@ -241,7 +241,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract, Au
                   color: PrimaryColor,
                 ),
                 currentAccountPicture: new CircleAvatar(
-                  backgroundImage: new AssetImage("assets/logo.png"),
+                  backgroundImage: new AssetImage("assets/icon.png"),
                 ),
                 accountName: Text(""),
                 accountEmail: Text(""),
