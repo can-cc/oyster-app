@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:oyster/model/Feed.dart';
 import 'package:oyster/screens/feed_detail/feed_detail_screen.dart';
 
@@ -18,6 +21,8 @@ class FeedListItem extends StatefulWidget {
 
 class FeedListItemState extends State<FeedListItem> {
   bool isFavorite;
+  DateFormat _dateFormat = new DateFormat('yyyy-MM-dd  HH:mm:ss');
+
 
   @override
   void initState() {
@@ -55,7 +60,21 @@ class FeedListItemState extends State<FeedListItem> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        title: Text(widget.feed.title),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(widget.feed.title),
+            Padding(
+              padding: EdgeInsets.only(top: 6.0),
+              child: Text(_dateFormat.format(widget.feed.createdAt),
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 13,
+                      color: Colors.grey)),
+            ),
+          ],
+        ),
         trailing: IconButton(
             icon: new Icon(isFavorite ? Icons.star : Icons.star_border,
                 size: 30, color: Colors.amber),

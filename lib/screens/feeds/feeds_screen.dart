@@ -108,7 +108,6 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract, Au
   }
 
   _getMoreData() {
-    print('_getMoreData');
     if (!isPerformingRequest) {
       setState(() => isPerformingRequest = true);
       _presenter.queryMoreFeeds(queryCount, offset, _selectedCategory.value, items.length > 0 ? items.last.id : 0);
@@ -146,11 +145,11 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract, Au
     }
   }
 
+  // 初始化刷新
   Future<Null> _handleRefresh() async {
     setState(() {
       items.clear();
     });
-    print('hihihihihihi');
     try {
       final List<Feed> feeds =
       await _presenter.getHeadFeeds(queryCount, _selectedCategory.value);
