@@ -14,23 +14,28 @@ class FeedsScreenPresenter {
   FeedsScreenPresenter(this._view);
 
   Future<List<Feed>> getHeadFeeds(int limit, String category) async {
-    return await queryFeeds(limit, 0, category, 0);
+    return await queryFeedsFromDBorServer(limit, 0, category, 0);
   }
 
   Future<Feeds> queryLatestFeeds(String category, int fromId) async {
-    return await api.getFeeds(0, 0, category, fromId, true);
+    Feeds feeds = await api.getFeeds(0, 0, category, fromId, true);
+    // TODO merge to a function with below code
+    print("从网络拿到的feed长度" + feeds.items.length.toString());
+    final db = AppDatabase.get();
+    db.saveFeeds(feeds.items);
+    return feeds;
   }
 
   queryMoreFeeds(int limit, int offset, String category, int fromId) async {
     try {
-      List<Feed> feeds = await queryFeeds(limit, 0, category, fromId);
+      List<Feed> feeds = await queryFeedsFromDBorServer(limit, 0, category, fromId);
       _view.onFeedReceived(feeds);
     } on Exception catch (error) {
       _view.onQueryFeedError(error.toString());
     }
   }
 
-  Future<List<Feed>> queryFeeds(int limit, int offset, String category, int fromId) async {
+  Future<List<Feed>> queryFeedsFromDBorServer(int limit, int offset, String category, int fromId) async {
     List<Feed> dbFeeds = await queryFeedsInDB(limit, offset, category, fromId);
     print("dbFeeds $dbFeeds");
     if (dbFeeds.length > 0) {

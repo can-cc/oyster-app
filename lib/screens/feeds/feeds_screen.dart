@@ -65,7 +65,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract, Au
       });
     });
 
-    _handleRefresh();
+    _handleFirstFeedsQuery();
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
@@ -116,16 +116,8 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract, Au
 
   void _handleBack(Feed feed) {}
 
-  // Future<Null> _handleInitFetch() async {
-  //   await _presenter.getHeadFeeds(30, _selectedCategory.value);
-  // }
-
   // 下拉刷新
   Future<Null> _handleRealRefresh2() async {
-    // setState(() {
-    //   items.clear();
-    // });
-    print("_handleRealRefresh2");
     try {
       final Feeds feeds =
       await _presenter.queryLatestFeeds(_selectedCategory.value, items.length > 0 ? items.first.id : null);
@@ -146,7 +138,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract, Au
   }
 
   // 初始化刷新
-  Future<Null> _handleRefresh() async {
+  Future<Null> _handleFirstFeedsQuery() async {
     setState(() {
       items.clear();
     });
@@ -200,7 +192,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract, Au
           onTap: () {
             _selectedCategory = SelectedCategory(
                 value: feedSource.id, viewValue: feedSource.name);
-            _handleRefresh();
+            _handleFirstFeedsQuery();
             Navigator.of(context).pop();
           });
     }).toList();
@@ -213,7 +205,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract, Au
               onTap: () {
                 _selectedCategory =
                     SelectedCategory(value: '_all', viewValue: 'All');
-                _handleRefresh();
+                _handleFirstFeedsQuery();
                 Navigator.of(context).pop();
               }),
           ListTile(
@@ -223,7 +215,7 @@ class FeedsPageState extends State<FeedsPage> implements FeedsScreenContract, Au
               onTap: () {
                 _selectedCategory =
                     SelectedCategory(value: '_favorite', viewValue: 'Star');
-                _handleRefresh();
+                _handleFirstFeedsQuery();
                 Navigator.of(context).pop();
               })
         ].toList() +
