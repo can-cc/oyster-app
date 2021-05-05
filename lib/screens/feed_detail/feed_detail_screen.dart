@@ -76,6 +76,10 @@ class FeedDetailPageState extends State<FeedDetailPage> {
               SizedBox(
                 height: 10,
               ),
+              Text("FROM: " + widget.feed.source.name,  style: TextStyle(color: Colors.black87)),
+              SizedBox(
+                height: 6,
+              ),
               Text(new DateFormat('yyyy-MM-dd  HH:mm:ss').format(widget.feed.createdAt),
                   style:
                       TextStyle(fontWeight: FontWeight.normal, fontSize: 12)),
